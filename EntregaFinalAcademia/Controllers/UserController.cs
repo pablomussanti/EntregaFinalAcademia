@@ -2,8 +2,11 @@
 
 namespace EntregaFinalAcademia.Controllers
 {
-    public class HomeController : Controller
+    [ApiController]
+    [Route("api/[controller")]
+    public class UserController : ControllerBase
     {
+
         public IActionResult Index()
         {
             return View();
