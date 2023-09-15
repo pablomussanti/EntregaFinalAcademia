@@ -10,7 +10,7 @@ namespace EntregaFinalAcademia.Controllers
         [Route("Index")]
         public IActionResult Index()
         {
-            return View();
+            return Ok(true);
         }
     }
 }

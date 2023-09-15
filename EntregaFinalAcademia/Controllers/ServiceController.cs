@@ -8,7 +8,7 @@ namespace EntregaFinalAcademia.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return Ok(true);
         }
     }
 }

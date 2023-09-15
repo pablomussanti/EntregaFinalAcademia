@@ -2,13 +2,13 @@
 {
     public class Proyect
     {
-        public int codProyecto { get; set; }
+        public int CodProyecto { get; set; }
 
-        public string nombre { get; set; }
+        public string Nombre { get; set; }
 
-        public string direccion { get; set; }
+        public string Direccion { get; set; }
 
-        public Boolean estado { get; set; } 
+        public Boolean Estado { get; set; } 
 
     }
 }
