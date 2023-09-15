@@ -2,12 +2,16 @@
 {
     public class User
     {
-        public int codUsuario { get; set; }
-        public int dni { get; set; }
-        public string nombre { get; set; }
+        public int CodUsuario { get; set; }
+        public int Dni { get; set; }
+        public string Nombre { get; set; }
 
-        public int tipo { get; set; }
+        public int Tipo { get; set; }
 
-        public string clave { get; set; }
+        public string Clave { get; set; }
+        public Role? Role { get; set; }
+
+        public Boolean Estado { get; set; }
+
     }
 }
