@@ -16,6 +16,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer("name=DefaultConnection");
 });
 
+builder.Services.AddScoped<IUnitOfWork, UnitOfWorkService>();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -26,10 +29,10 @@ if (app.Environment.IsDevelopment())
 }
 
 
-//builder.Services.AddScoped<IUnitOfWork, UnitOfWorkService>();
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

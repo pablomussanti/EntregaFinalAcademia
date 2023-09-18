@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using EntregaFinalAcademia.DTOs;
+using Newtonsoft.Json;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,6 +8,30 @@ namespace EntregaFinalAcademia.Entities
 {
     public class User
     {
+        public User(RegisterDto dto)
+        {
+            Nombre = dto.Nombre;
+            Dni = dto.Dni;
+            Tipo = dto.Tipo;
+            Clave = dto.Clave;
+            Estado = dto.Estado;
+        }
+
+        public User(RegisterDto dto, int id)
+        {
+            CodUsuario = id;
+            Nombre = dto.Nombre;
+            Dni = dto.Dni;
+            Tipo = dto.Tipo;
+            Clave = dto.Clave;
+            Estado = dto.Estado;
+        }
+
+        public User()
+        {
+
+        }
+
         [Key]
         [Column("user_id", TypeName = "int")]
         public int CodUsuario { get; set; }
