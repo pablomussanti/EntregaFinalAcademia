@@ -3,9 +3,10 @@
 namespace EntregaFinalAcademia.Controllers
 {
     [ApiController]
-    [Route("api/[controller")]
+    [Route("api/[controller]")]
     public class LoginController : ControllerBase
     {
+        [HttpGet]
         public IActionResult Index()
         {
             return Ok(true);

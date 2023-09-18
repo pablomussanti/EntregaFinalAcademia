@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using EntregaFinalAcademia.DTOs;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -6,6 +7,36 @@ namespace EntregaFinalAcademia.Entities
 {
     public class Job
     {
+
+        public Job(JobDto dto)
+        {
+            Fecha = dto.Fecha;
+            CodProyecto = dto.CodProyecto;
+            CodServicio = dto.CodServicio;
+            CantHoras = dto.CantHoras;
+            ValorHora = dto.ValorHora;
+            Costo = dto.Costo;
+            Estado = dto.Estado;
+        }
+
+        public Job(JobDto dto, int id)
+        {
+            CodTrabajo = id;
+            Fecha = dto.Fecha;
+            CodProyecto = dto.CodProyecto;
+            CodServicio = dto.CodServicio;
+            CantHoras = dto.CantHoras;
+            ValorHora = dto.ValorHora;
+            Costo = dto.Costo;
+            Estado = dto.Estado;
+        }
+
+        public Job()
+        {
+
+        }
+
+
         [Key]
         [Column("job_id", TypeName = "int")]
         public int CodTrabajo { get; set; }
