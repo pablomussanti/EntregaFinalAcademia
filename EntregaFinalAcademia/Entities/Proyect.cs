@@ -1,33 +1,16 @@
 ﻿using EntregaFinalAcademia.DTOs;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Extensions;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Xml.Linq;
 
 namespace EntregaFinalAcademia.Entities
 {
     public class Proyect
     {
-
-        public Proyect(ProyectDto dto)
-        {
-            Nombre = dto.Nombre;
-            Direccion = dto.Direccion;
-            Estado = dto.Estado;
-        }
-
-        public Proyect(ProyectDto dto, int id)
-        {
-            CodProyecto = id;
-            Nombre = dto.Nombre;
-            Direccion = dto.Direccion;
-            Estado = dto.Estado;
-        }
-
-        public Proyect()
-        {
-
-        }
 
         [Key]
         [Column("proyect_id")]
@@ -42,9 +25,42 @@ namespace EntregaFinalAcademia.Entities
         public string Direccion { get; set; }
 
         [Required]
-        [Column("proyect_estado", TypeName = "bit")]
+        [Column("proyect_estado", TypeName = "int")]
+        public EstadoProyecto Estado { get; set; }
+
+        [Required]
+        [Column("proyect_estadoActivo", TypeName = "bit")]
         [DefaultValue(true)]
-        public Boolean Estado { get; set; } 
+        public Boolean EstadoActivo { get; set; }
+
+        public enum EstadoProyecto
+        {
+            Pendiente = 1,
+            Confirmado = 2,
+            Terminado = 3
+        }
+
+        public Proyect(ProyectDto dto)
+        {
+            Nombre = dto.Nombre;
+            Direccion = dto.Direccion;
+            Estado = dto.Estado;
+            EstadoActivo = dto.EstadoActivo;
+            
+        }
+
+        public Proyect(ProyectDto dto, int id)
+        {
+            CodProyecto = id;
+            Nombre = dto.Nombre;
+            Direccion = dto.Direccion;
+            Estado = dto.Estado;
+            EstadoActivo = dto.EstadoActivo;
+        }
+
+        public Proyect()
+        {
+        }
 
     }
 }

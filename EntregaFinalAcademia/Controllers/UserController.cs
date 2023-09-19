@@ -28,6 +28,39 @@ namespace EntregaFinalAcademia.Controllers
         }
 
 
+        [HttpGet]
+        [Route("ListState")]
+        public async Task<ActionResult<IEnumerable<User>>> GetAllState(Boolean EstadoActivo)
+        {
+            var users = await _unitOfWork.UserRepository.GetAll();
+            var listaCompletaUsers = new List<User>();
+
+            foreach (var usr in users)
+            {
+                if (EstadoActivo == true && usr.Estado == true)
+                {
+                    listaCompletaUsers.Add(usr);
+                }
+
+                if (EstadoActivo == false && usr.Estado == false)
+                {
+                    listaCompletaUsers.Add(usr);
+                }
+            }
+            return listaCompletaUsers;
+        }
+
+
+        [HttpGet]
+        [Route("GetById")]
+        public async Task<ActionResult<User>> GetById(int id)
+        {
+            var user = await _unitOfWork.UserRepository.GetById(id);
+
+            return user;
+        }
+
+
 
         [HttpPost]
         [Route("Register")]
@@ -50,11 +83,21 @@ namespace EntregaFinalAcademia.Controllers
             return Ok(true);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("Hard/{id}")]
 
-        public async Task<IActionResult> Delete([FromRoute] int id)
+        public async Task<IActionResult> HardDelete([FromRoute] int id)
         {
-            var result = await _unitOfWork.UserRepository.Delete(id);
+            var result = await _unitOfWork.UserRepository.HardDelete(id);
+
+            await _unitOfWork.Complete();
+            return Ok(true);
+        }
+
+        [HttpDelete("Soft/{id}")]
+
+        public async Task<IActionResult> SoftDelete([FromRoute] int id)
+        {
+            var result = await _unitOfWork.UserRepository.SoftDelete(id);
 
             await _unitOfWork.Complete();
             return Ok(true);

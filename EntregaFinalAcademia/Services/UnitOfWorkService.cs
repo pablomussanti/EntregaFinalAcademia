@@ -19,7 +19,9 @@ namespace EntregaFinalAcademia.Services
             RoleRepository = new RoleRepository(_context);
             ServiceRepository = new ServiceRepository(_context);
             JobRepository = new JobRepository(_context);
-            RoleRepository = new RoleRepository(_context);
+            ProyectRepository = new ProyectRepository(_context);
+
+
 
         }
 

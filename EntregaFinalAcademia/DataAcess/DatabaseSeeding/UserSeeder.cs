@@ -11,9 +11,9 @@ namespace EntregaFinalAcademia.DataAcess.DatabaseSeeding
                 new User
                 {
                     CodUsuario = 1,
-                    Clave = "1234",
-                    Dni = 40951295,
-                    Nombre = "Pedro",
+                    Clave = "Admin",
+                    Dni = 11111111,
+                    Nombre = "Admin",
                     Tipo = 1,
                     Estado = true
                 });

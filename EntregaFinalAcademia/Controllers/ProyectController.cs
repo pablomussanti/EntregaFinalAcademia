@@ -16,7 +16,6 @@ namespace EntregaFinalAcademia.Controllers
             _unitOfWork = unitOfWork;
         }
 
-
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Proyect>>> GetAll()
         {
@@ -26,6 +25,45 @@ namespace EntregaFinalAcademia.Controllers
         }
 
 
+        [HttpGet]
+        [Route("ListState")]
+        public async Task<ActionResult<IEnumerable<Proyect>>> GetAllState(Proyect.EstadoProyecto EstadoProyecto, Boolean EstadoActivo)
+        {
+            var proyects = await _unitOfWork.ProyectRepository.GetAll();
+            var listaCompletaProyects = new List<Proyect>();
+
+            foreach (var pr in proyects)
+            {
+                if (EstadoActivo == true && pr.EstadoActivo == true)
+                {
+                    if (pr.Estado == EstadoProyecto || EstadoProyecto == 0 )
+                    {
+                        listaCompletaProyects.Add(pr);
+                    }
+
+                }
+
+                if (EstadoActivo == false && pr.EstadoActivo == false)
+                {
+                    if (pr.Estado == EstadoProyecto || EstadoProyecto == 0)
+                    {
+                        listaCompletaProyects.Add(pr);
+                    }
+                }
+
+            }
+            return listaCompletaProyects;
+        }
+
+
+        [HttpGet]
+        [Route("GetById")]
+        public async Task<ActionResult<Proyect>> GetById(int id)
+        {
+            var proyect = await _unitOfWork.ProyectRepository.GetById(id);
+
+            return proyect;
+        }
 
         [HttpPost]
         [Route("Create")]
@@ -48,11 +86,21 @@ namespace EntregaFinalAcademia.Controllers
             return Ok(true);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("Hard/{id}")]
 
-        public async Task<IActionResult> Delete([FromRoute] int id)
+        public async Task<IActionResult> HardDelete([FromRoute] int id)
         {
-            var result = await _unitOfWork.ProyectRepository.Delete(id);
+            var result = await _unitOfWork.ProyectRepository.HardDelete(id);
+
+            await _unitOfWork.Complete();
+            return Ok(true);
+        }
+
+        [HttpDelete("Soft/{id}")]
+
+        public async Task<IActionResult> SoftDelete([FromRoute] int id)
+        {
+            var result = await _unitOfWork.ProyectRepository.SoftDelete(id);
 
             await _unitOfWork.Complete();
             return Ok(true);
