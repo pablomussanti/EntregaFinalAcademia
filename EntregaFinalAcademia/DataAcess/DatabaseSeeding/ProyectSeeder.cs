@@ -12,8 +12,9 @@ namespace EntregaFinalAcademia.DataAcess.DatabaseSeeding
                 {
                     CodProyecto = 1,
                     Direccion = "Santa Fe 29475",
-                    Estado = true,
-                    Nombre = "Proyecto 1"
+                    Estado = Proyect.EstadoProyecto.Pendiente,
+                    Nombre = "Proyecto 1",
+                    EstadoActivo = true
 
                 });
         }

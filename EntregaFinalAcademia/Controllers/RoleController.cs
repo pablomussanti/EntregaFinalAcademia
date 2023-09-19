@@ -39,12 +39,12 @@ namespace EntregaFinalAcademia.Controllers
             return Ok(true);
         }
 
-        [Authorize(Policy = "Admin")]
+        //[Authorize(Policy = "Admin")]
         [HttpPut("{id}")]
 
-        public async Task<IActionResult> Update([FromRoute] int id, Role role)
+        public async Task<IActionResult> Update([FromRoute] int id, RoleDto dto)
         {
-            var result = await _unitOfWork.RoleRepository.Update(role);
+            var result = await _unitOfWork.RoleRepository.Update(new Role(dto, id));
 
             await _unitOfWork.Complete();
             return Ok(true);
@@ -54,7 +54,7 @@ namespace EntregaFinalAcademia.Controllers
 
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var result = await _unitOfWork.RoleRepository.Delete(id);
+            var result = await _unitOfWork.RoleRepository.HardDelete(id);
 
             await _unitOfWork.Complete();
             return Ok(true);

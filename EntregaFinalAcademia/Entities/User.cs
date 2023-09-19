@@ -8,29 +8,6 @@ namespace EntregaFinalAcademia.Entities
 {
     public class User
     {
-        public User(RegisterDto dto)
-        {
-            Nombre = dto.Nombre;
-            Dni = dto.Dni;
-            Tipo = dto.Tipo;
-            Clave = dto.Clave;
-            Estado = dto.Estado;
-        }
-
-        public User(RegisterDto dto, int id)
-        {
-            CodUsuario = id;
-            Nombre = dto.Nombre;
-            Dni = dto.Dni;
-            Tipo = dto.Tipo;
-            Clave = dto.Clave;
-            Estado = dto.Estado;
-        }
-
-        public User()
-        {
-
-        }
 
         [Key]
         [Column("user_id", TypeName = "int")]
@@ -58,6 +35,31 @@ namespace EntregaFinalAcademia.Entities
         [Column("user_estado", TypeName = "bit")]
         [DefaultValue(true)]
         public Boolean Estado { get; set; }
+
+
+        public User(RegisterDto dto)
+        {
+            Nombre = dto.Nombre;
+            Dni = dto.Dni;
+            Tipo = dto.Tipo;
+            Clave = dto.Clave;
+            Estado = dto.Estado;
+        }
+
+        public User(RegisterDto dto, int id)
+        {
+            CodUsuario = id;
+            Nombre = dto.Nombre;
+            Dni = dto.Dni;
+            Tipo = dto.Tipo;
+            Clave = dto.Clave;
+            Estado = dto.Estado;
+        }
+
+        public User()
+        {
+
+        }
 
     }
 }

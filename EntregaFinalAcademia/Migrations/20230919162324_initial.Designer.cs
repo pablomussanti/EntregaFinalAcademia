@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EntregaFinalAcademia.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230916215333_initial6")]
-    partial class initial6
+    [Migration("20230919162324_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -72,7 +72,7 @@ namespace EntregaFinalAcademia.Migrations
                             CodServicio = 1,
                             Costo = 2000.0,
                             Estado = true,
-                            Fecha = new DateTime(2023, 9, 16, 18, 53, 33, 159, DateTimeKind.Local).AddTicks(7619),
+                            Fecha = new DateTime(2023, 9, 19, 13, 23, 24, 132, DateTimeKind.Local).AddTicks(9848),
                             ValorHora = 100.0
                         });
                 });
@@ -91,9 +91,13 @@ namespace EntregaFinalAcademia.Migrations
                         .HasColumnType("VARCHAR(100)")
                         .HasColumnName("proyect_direccion");
 
-                    b.Property<bool>("Estado")
-                        .HasColumnType("bit")
+                    b.Property<int>("Estado")
+                        .HasColumnType("int")
                         .HasColumnName("proyect_estado");
+
+                    b.Property<bool>("EstadoActivo")
+                        .HasColumnType("bit")
+                        .HasColumnName("proyect_estadoActivo");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -109,7 +113,8 @@ namespace EntregaFinalAcademia.Migrations
                         {
                             CodProyecto = 1,
                             Direccion = "Santa Fe 29475",
-                            Estado = true,
+                            Estado = 1,
+                            EstadoActivo = true,
                             Nombre = "Proyecto 1"
                         });
                 });
@@ -238,7 +243,7 @@ namespace EntregaFinalAcademia.Migrations
                         new
                         {
                             CodUsuario = 1,
-                            Clave = "",
+                            Clave = "1234",
                             Dni = 40951295.0,
                             Estado = true,
                             Nombre = "Pedro",

@@ -13,6 +13,11 @@ namespace EntregaFinalAcademia.DataAcess.Repositories
 
         }
 
+        public override async Task<User> GetById(int id)
+        {
+            return await _context.Users.FirstOrDefaultAsync(x => x.CodUsuario == id);
+        }
+
         public override async Task<bool> Update(User updateUser)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.CodUsuario == updateUser.CodUsuario);
@@ -28,7 +33,7 @@ namespace EntregaFinalAcademia.DataAcess.Repositories
             return true;
         }
 
-        public override async Task<bool> Delete(int id)
+        public override async Task<bool> HardDelete(int id)
         {
             var user = await _context.Users.Where(x => x.CodUsuario == id).FirstOrDefaultAsync();
             if (user != null)
@@ -36,6 +41,17 @@ namespace EntregaFinalAcademia.DataAcess.Repositories
                 _context.Users.Remove(user);
             }
 
+            return true;
+        }
+
+        public override async Task<bool> SoftDelete(int id)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.CodUsuario == id);
+            if (user == null) { return false; }
+
+            user.Estado = false;
+
+            _context.Users.Update(user);
             return true;
         }
 

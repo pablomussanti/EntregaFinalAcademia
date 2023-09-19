@@ -25,6 +25,37 @@ namespace EntregaFinalAcademia.Controllers
             return services;
         }
 
+        [HttpGet]
+        [Route("ListState")]
+        public async Task<ActionResult<IEnumerable<Service>>> GetAllState(Boolean EstadoActivo)
+        {
+            var services = await _unitOfWork.ServiceRepository.GetAll();
+            var listaCompletaServices = new List<Service>();
+
+            foreach (var srv in services)
+            {
+                if (EstadoActivo == true && srv.estado == true)
+                {
+                    listaCompletaServices.Add(srv);
+                }
+
+                if (EstadoActivo == false && srv.estado == false)
+                {
+                    listaCompletaServices.Add(srv);
+                }
+            }
+            return listaCompletaServices;
+        }
+
+        [HttpGet]
+        [Route("GetById")]
+        public async Task<ActionResult<Service>> GetById(int id)
+        {
+            var service = await _unitOfWork.ServiceRepository.GetById(id);
+
+            return service;
+        }
+
 
 
         [HttpPost]
@@ -48,14 +79,25 @@ namespace EntregaFinalAcademia.Controllers
             return Ok(true);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("Hard/{id}")]
 
-        public async Task<IActionResult> Delete([FromRoute] int id)
+        public async Task<IActionResult> HardDelete([FromRoute] int id)
         {
-            var result = await _unitOfWork.ServiceRepository.Delete(id);
+            var result = await _unitOfWork.ServiceRepository.HardDelete(id);
 
             await _unitOfWork.Complete();
             return Ok(true);
         }
+
+        [HttpDelete("Soft/{id}")]
+
+        public async Task<IActionResult> SoftDelete([FromRoute] int id)
+        {
+            var result = await _unitOfWork.ServiceRepository.SoftDelete(id);
+
+            await _unitOfWork.Complete();
+            return Ok(true);
+        }
+
     }
 }
