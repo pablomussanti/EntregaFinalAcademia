@@ -1,5 +1,6 @@
 ﻿using EntregaFinalAcademia.DTOs;
 using EntregaFinalAcademia.Entities;
+using EntregaFinalAcademia.Helpers;
 using EntregaFinalAcademia.Infrastructure;
 using EntregaFinalAcademia.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -22,17 +23,22 @@ namespace EntregaFinalAcademia.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetAll()
+        public async Task<IActionResult> GetAll()
         {
             var users = await _unitOfWork.UserRepository.GetAll();
 
-            return users;
+            int pageToShow = 1;
+            if (Request.Query.ContainsKey("page")) int.TryParse(Request.Query["page"], out pageToShow);
+            var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
+            var paginateUsers = PaginateHelper.Paginate(users, pageToShow, url);
+
+            return ResponseFactory.CreateSuccessResponse(200, paginateUsers);
         }
 
         [Authorize]
         [HttpGet]
         [Route("ListState")]
-        public async Task<ActionResult<IEnumerable<User>>> GetAllState(Boolean EstadoActivo)
+        public async Task<IActionResult> GetAllState(Boolean EstadoActivo)
         {
             var users = await _unitOfWork.UserRepository.GetAll();
             var listaCompletaUsers = new List<User>();
@@ -50,17 +56,22 @@ namespace EntregaFinalAcademia.Controllers
                 }
             }
 
-            return listaCompletaUsers;
+            int pageToShow = 1;
+            if (Request.Query.ContainsKey("page")) int.TryParse(Request.Query["page"], out pageToShow);
+            var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
+            var paginateUsers = PaginateHelper.Paginate(listaCompletaUsers, pageToShow, url);
+
+            return ResponseFactory.CreateSuccessResponse(200, paginateUsers);
         }
 
         [Authorize]
         [HttpGet]
         [Route("GetById")]
-        public async Task<ActionResult<User>> GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
             var user = await _unitOfWork.UserRepository.GetById(id);
 
-            return user;
+            return ResponseFactory.CreateSuccessResponse(200, user);
         }
 
 

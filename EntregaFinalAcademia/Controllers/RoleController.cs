@@ -1,5 +1,6 @@
 ﻿using EntregaFinalAcademia.DTOs;
 using EntregaFinalAcademia.Entities;
+using EntregaFinalAcademia.Helpers;
 using EntregaFinalAcademia.Infrastructure;
 using EntregaFinalAcademia.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -21,11 +22,15 @@ namespace EntregaFinalAcademia.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Role>>> GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var Roles = await _unitOfWork.RoleRepository.GetAll();
+            var roles = await _unitOfWork.RoleRepository.GetAll();
+            int pageToShow = 1;
+            if (Request.Query.ContainsKey("page")) int.TryParse(Request.Query["page"], out pageToShow);
+            var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
+            var paginateRoles = PaginateHelper.Paginate(roles, pageToShow, url);
 
-            return Roles;
+            return ResponseFactory.CreateSuccessResponse(200, paginateRoles);
         }
 
 
