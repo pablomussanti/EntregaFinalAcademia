@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using EntregaFinalAcademia.DTOs;
+using EntregaFinalAcademia.Helpers;
+using EntregaFinalAcademia.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace EntregaFinalAcademia.Controllers
 {
@@ -6,10 +10,35 @@ namespace EntregaFinalAcademia.Controllers
     [Route("api/[controller]")]
     public class LoginController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult Index()
+        private TokenJwtHelper _tokenJwtHelper;
+        private readonly IUnitOfWork _unitOfWork;
+        public LoginController(IUnitOfWork unitOfWork, IConfiguration configuration)
         {
-            return Ok(true);
+            _unitOfWork = unitOfWork;
+            _tokenJwtHelper = new TokenJwtHelper(configuration);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(AuthenticateDto dto)
+        {
+            var userCredentials = await _unitOfWork.UserRepository.AuthenticateCredentials(dto);
+            if (userCredentials is null) return Unauthorized("Las credenciales son incorrectas");
+
+            if (userCredentials.Estado == false) return Unauthorized("El usuario ha sido dado de baja");
+
+            var token = _tokenJwtHelper.GenerateToken(userCredentials);
+
+            var user = new UserLoginDto()
+            {
+                Email = userCredentials.Email,
+                Name = userCredentials.Nombre,
+                Token = token
+            };
+
+
+            return Ok(user);
+
         }
     }
 }

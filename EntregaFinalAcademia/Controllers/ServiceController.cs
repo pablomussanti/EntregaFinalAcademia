@@ -8,6 +8,7 @@ namespace EntregaFinalAcademia.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class ServiceController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -57,7 +58,7 @@ namespace EntregaFinalAcademia.Controllers
         }
 
 
-
+        [Authorize(Policy = "Admin")]
         [HttpPost]
         [Route("Create")]
         public async Task<IActionResult> Insert(ServiceDto dto)
@@ -69,6 +70,7 @@ namespace EntregaFinalAcademia.Controllers
             return Ok(true);
         }
 
+        [Authorize(Policy = "Admin")]
         [HttpPut("{id}")]
 
         public async Task<IActionResult> Update([FromRoute] int id, ServiceDto dto)
@@ -79,6 +81,7 @@ namespace EntregaFinalAcademia.Controllers
             return Ok(true);
         }
 
+        [Authorize(Policy = "Admin")]
         [HttpDelete("Hard/{id}")]
 
         public async Task<IActionResult> HardDelete([FromRoute] int id)
@@ -89,6 +92,7 @@ namespace EntregaFinalAcademia.Controllers
             return Ok(true);
         }
 
+        [Authorize(Policy = "Admin")]
         [HttpDelete("Soft/{id}")]
 
         public async Task<IActionResult> SoftDelete([FromRoute] int id)

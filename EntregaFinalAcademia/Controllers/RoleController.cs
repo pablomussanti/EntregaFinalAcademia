@@ -9,6 +9,7 @@ namespace EntregaFinalAcademia.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RoleController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -27,7 +28,7 @@ namespace EntregaFinalAcademia.Controllers
         }
 
 
-
+        [Authorize(Policy = "Admin")]
         [HttpPost]
         [Route("Role")]
         public async Task<IActionResult> Insert(RoleDto dto)
@@ -39,7 +40,7 @@ namespace EntregaFinalAcademia.Controllers
             return Ok(true);
         }
 
-        //[Authorize(Policy = "Admin")]
+        [Authorize(Policy = "Admin")]
         [HttpPut("{id}")]
 
         public async Task<IActionResult> Update([FromRoute] int id, RoleDto dto)
@@ -50,6 +51,7 @@ namespace EntregaFinalAcademia.Controllers
             return Ok(true);
         }
 
+        [Authorize(Policy = "Admin")]
         [HttpDelete("{id}")]
 
         public async Task<IActionResult> Delete([FromRoute] int id)

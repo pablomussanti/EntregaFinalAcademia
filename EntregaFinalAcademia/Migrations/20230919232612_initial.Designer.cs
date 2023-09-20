@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EntregaFinalAcademia.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230919162324_initial")]
+    [Migration("20230919232612_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,7 +72,7 @@ namespace EntregaFinalAcademia.Migrations
                             CodServicio = 1,
                             Costo = 2000.0,
                             Estado = true,
-                            Fecha = new DateTime(2023, 9, 19, 13, 23, 24, 132, DateTimeKind.Local).AddTicks(9848),
+                            Fecha = new DateTime(2023, 9, 19, 20, 26, 12, 55, DateTimeKind.Local).AddTicks(5405),
                             ValorHora = 100.0
                         });
                 });
@@ -210,12 +210,17 @@ namespace EntregaFinalAcademia.Migrations
 
                     b.Property<string>("Clave")
                         .IsRequired()
-                        .HasColumnType("VARCHAR(60)")
+                        .HasColumnType("VARCHAR(250)")
                         .HasColumnName("user_clave");
 
                     b.Property<double>("Dni")
                         .HasColumnType("float")
                         .HasColumnName("user_dni");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(100)")
+                        .HasColumnName("user_email");
 
                     b.Property<bool>("Estado")
                         .HasColumnType("bit")
@@ -226,12 +231,9 @@ namespace EntregaFinalAcademia.Migrations
                         .HasColumnType("VARCHAR(100)")
                         .HasColumnName("user_nombre");
 
-                    b.Property<int?>("RoleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Tipo")
+                    b.Property<int>("RoleId")
                         .HasColumnType("int")
-                        .HasColumnName("user_tipo");
+                        .HasColumnName("role_id");
 
                     b.HasKey("CodUsuario");
 
@@ -243,11 +245,12 @@ namespace EntregaFinalAcademia.Migrations
                         new
                         {
                             CodUsuario = 1,
-                            Clave = "1234",
-                            Dni = 40951295.0,
+                            Clave = "5109bec004a04a6aa18a05aef0856af673b1a889b5f142b725cb65875dd8adbd",
+                            Dni = 11111111.0,
+                            Email = "admin@hotmail.com",
                             Estado = true,
-                            Nombre = "Pedro",
-                            Tipo = 1
+                            Nombre = "Admin",
+                            RoleId = 1
                         });
                 });
 
@@ -255,7 +258,9 @@ namespace EntregaFinalAcademia.Migrations
                 {
                     b.HasOne("EntregaFinalAcademia.Entities.Role", "Role")
                         .WithMany()
-                        .HasForeignKey("RoleId");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Role");
                 });

@@ -8,7 +8,7 @@ namespace EntregaFinalAcademia.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [AllowAnonymous]
+
     public class UserController : ControllerBase
     {
 
@@ -19,6 +19,7 @@ namespace EntregaFinalAcademia.Controllers
         }
 
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetAll()
         {
@@ -27,7 +28,7 @@ namespace EntregaFinalAcademia.Controllers
             return users;
         }
 
-
+        [Authorize]
         [HttpGet]
         [Route("ListState")]
         public async Task<ActionResult<IEnumerable<User>>> GetAllState(Boolean EstadoActivo)
@@ -50,7 +51,7 @@ namespace EntregaFinalAcademia.Controllers
             return listaCompletaUsers;
         }
 
-
+        [Authorize]
         [HttpGet]
         [Route("GetById")]
         public async Task<ActionResult<User>> GetById(int id)
@@ -61,18 +62,20 @@ namespace EntregaFinalAcademia.Controllers
         }
 
 
-
+        [AllowAnonymous]
         [HttpPost]
         [Route("Register")]
         public async Task<IActionResult> Register(RegisterDto dto)
         {
 
+            if (await _unitOfWork.UserRepository.UserEx(dto.Email)) return Ok($"Ya existe un usuario registrado con el mail:{dto.Email}");
             var user = new User(dto);
             await _unitOfWork.UserRepository.Insert(user);
             await _unitOfWork.Complete();
             return Ok(true);
         }
 
+        [Authorize(Policy = "Admin")]
         [HttpPut("{id}")]
 
         public async Task<IActionResult> Update([FromRoute] int id, RegisterDto dto)
@@ -83,6 +86,7 @@ namespace EntregaFinalAcademia.Controllers
             return Ok(true);
         }
 
+        [Authorize(Policy = "Admin")]
         [HttpDelete("Hard/{id}")]
 
         public async Task<IActionResult> HardDelete([FromRoute] int id)
@@ -93,6 +97,7 @@ namespace EntregaFinalAcademia.Controllers
             return Ok(true);
         }
 
+        [Authorize(Policy = "Admin")]
         [HttpDelete("Soft/{id}")]
 
         public async Task<IActionResult> SoftDelete([FromRoute] int id)
