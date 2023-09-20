@@ -17,6 +17,11 @@ namespace EntregaFinalAcademia.DataAcess.Repositories
             return await _context.Set<T>().ToListAsync();
         }
 
+        public virtual Task<T> GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public virtual async Task<bool> Insert(T entity)
         {
             await _context.Set<T>().AddAsync(entity);
@@ -28,10 +33,14 @@ namespace EntregaFinalAcademia.DataAcess.Repositories
             throw new NotImplementedException();
         }
 
-        public virtual Task<bool> Delete(int id)
+        public virtual Task<bool> HardDelete(int id)
         {
             throw new NotImplementedException();
         }
 
+        public virtual Task<bool> SoftDelete(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -11,20 +11,25 @@ namespace EntregaFinalAcademia.DataAcess.Repositories
         {
         }
 
+        public override async Task<Service> GetById(int id)
+        {
+            return await _context.Services.FirstOrDefaultAsync(x => x.codServicio == id);
+        }
+
         public override async Task<bool> Update(Service service)
         {
-            var Srvc = await _context.Services.FirstOrDefaultAsync(x => x.codServicio == service.codServicio);
-            if (Srvc == null) { return false; }
+            var srv = await _context.Services.FirstOrDefaultAsync(x => x.codServicio == service.codServicio);
+            if (srv == null) { return false; }
 
-            Srvc.estado = service.estado;
-            Srvc.valorHora = service.valorHora;
-            Srvc.descr = service.descr;
+            srv.estado = service.estado;
+            srv.valorHora = service.valorHora;
+            srv.descr = service.descr;
 
-            _context.Services.Update(Srvc);
+            _context.Services.Update(srv);
             return true;
         }
 
-        public override async Task<bool> Delete(int id)
+        public override async Task<bool> HardDelete(int id)
         {
             var Srvc = await _context.Services.Where(x => x.codServicio == id).FirstOrDefaultAsync();
             if (Srvc != null)
@@ -32,6 +37,17 @@ namespace EntregaFinalAcademia.DataAcess.Repositories
                 _context.Services.Remove(Srvc);
             }
 
+            return true;
+        }
+
+        public override async Task<bool> SoftDelete(int id)
+        {
+            var srv = await _context.Services.FirstOrDefaultAsync(x => x.codServicio == id);
+            if (srv == null) { return false; }
+
+            srv.estado = false;
+
+            _context.Services.Update(srv);
             return true;
         }
 

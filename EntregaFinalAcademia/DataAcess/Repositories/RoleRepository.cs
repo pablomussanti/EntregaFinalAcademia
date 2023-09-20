@@ -25,7 +25,7 @@ namespace EntregaFinalAcademia.DataAcess.Repositories
             return true;
         }
 
-        public override async Task<bool> Delete(int id)
+        public override async Task<bool> HardDelete(int id)
         {
             var Role = await _context.Roles.Where(x => x.Id == id).FirstOrDefaultAsync();
             if (Role != null)

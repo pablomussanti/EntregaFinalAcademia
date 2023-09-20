@@ -27,6 +27,38 @@ namespace EntregaFinalAcademia.Controllers
             return jobs;
         }
 
+        [HttpGet]
+        [Route("ListState")]
+        public async Task<ActionResult<IEnumerable<Job>>> GetAllState(Boolean EstadoActivo)
+        {
+            var Jobs = await _unitOfWork.JobRepository.GetAll();
+            var listaCompletaJobs = new List<Job>();
+
+            foreach (var job in Jobs)
+            {
+                if (EstadoActivo == true && job.Estado == true)
+                {
+                    listaCompletaJobs.Add(job);
+                }
+
+                if (EstadoActivo == false && job.Estado == false)
+                {
+                    listaCompletaJobs.Add(job);
+                }
+            }
+            return listaCompletaJobs;
+        }
+
+
+        [HttpGet]
+        [Route("GetById")]
+        public async Task<ActionResult<Job>> GetById(int id)
+        {
+            var job = await _unitOfWork.JobRepository.GetById(id);
+
+            return job;
+        }
+
 
 
         [HttpPost]
@@ -52,10 +84,19 @@ namespace EntregaFinalAcademia.Controllers
         }
 
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete([FromRoute] int id)
+        [HttpDelete("Hard/{id}")]
+        public async Task<IActionResult> HardDelete([FromRoute] int id)
         {
-            var result = await _unitOfWork.JobRepository.Delete(id);
+            var result = await _unitOfWork.JobRepository.HardDelete(id);
+
+            await _unitOfWork.Complete();
+            return Ok(true);
+        }
+
+        [HttpDelete("Soft/{id}")]
+        public async Task<IActionResult> SoftDelete([FromRoute] int id)
+        {
+            var result = await _unitOfWork.JobRepository.SoftDelete(id);
 
             await _unitOfWork.Complete();
             return Ok(true);

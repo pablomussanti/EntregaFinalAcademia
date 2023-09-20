@@ -6,17 +6,6 @@ namespace EntregaFinalAcademia.Entities
     public class Role
     {
 
-        public Role(RoleDto dto)
-        {
-            Name = dto.Name;
-            Description = dto.Description;
-            Activo = dto.Activo;
-        }
-        public Role()
-        {
-
-        }
-
         [Column("role_id")]
         public int Id { get; set; }
         [Column("role_name")]
@@ -26,5 +15,26 @@ namespace EntregaFinalAcademia.Entities
         [Column("role_activo")]
         public bool Activo { get; set; }
 
+
+
+        public Role(RoleDto dto)
+        {
+            Name = dto.Name;
+            Description = dto.Description;
+            Activo = dto.Activo;
+        }
+
+        public Role(RoleDto dto, int id)
+        {
+            Id = id;
+            Name = dto.Name;
+            Description = dto.Description;
+            Activo = dto.Activo;
+        }
+
+        public Role()
+        {
+
+        }
     }
 }
