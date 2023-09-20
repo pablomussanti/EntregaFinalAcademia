@@ -13,6 +13,13 @@ namespace EntregaFinalAcademia.DataAcess.DatabaseSeeding
                     codServicio = 1,
                     descr = "Reparacion",
                     estado = true,
+                    valorHora = 250
+                },
+                new Service
+                {
+                    codServicio = 2,
+                    descr = "Mantenimiento",
+                    estado = true,
                     valorHora = 100
                 });
         }

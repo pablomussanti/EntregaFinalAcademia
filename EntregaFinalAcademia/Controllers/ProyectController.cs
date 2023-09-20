@@ -19,6 +19,11 @@ namespace EntregaFinalAcademia.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        /// <summary>
+        ///  Get all Proyects without state
+        /// </summary>
+        /// <returns> List of Proyects </returns>
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -31,6 +36,12 @@ namespace EntregaFinalAcademia.Controllers
 
             return ResponseFactory.CreateSuccessResponse(200, paginateProyects);
         }
+
+
+        /// <summary>
+        ///  Get All Proyects by state
+        /// </summary>
+        /// <returns> List of Proyects </returns>
 
 
         [HttpGet]
@@ -69,6 +80,10 @@ namespace EntregaFinalAcademia.Controllers
             return ResponseFactory.CreateSuccessResponse(200, paginateProyects);
         }
 
+        /// <summary>
+        ///  Get a Proyect by ID
+        /// </summary>
+        /// <returns> A Proyect </returns>
 
         [HttpGet]
         [Route("GetById")]
@@ -78,6 +93,13 @@ namespace EntregaFinalAcademia.Controllers
 
             return ResponseFactory.CreateSuccessResponse(200, proyect);
         }
+
+
+        /// <summary>
+        ///  Create a Proyect
+        /// </summary>
+        /// <returns> Confirm state of request </returns>
+
 
         [Authorize(Policy = "Admin")]
         [HttpPost]
@@ -99,6 +121,11 @@ namespace EntregaFinalAcademia.Controllers
             }
         }
 
+        /// <summary>
+        ///  Update a Job
+        /// </summary>
+        /// <returns> Confirm state of request </returns>
+
         [Authorize(Policy = "Admin")]
         [HttpPut("{id}")]
 
@@ -117,6 +144,11 @@ namespace EntregaFinalAcademia.Controllers
                 return ResponseFactory.CreateSuccessResponse(200, "Proyecto modificado con exito");
             }
         }
+
+        /// <summary>
+        ///  Delete a Job
+        /// </summary>
+        /// <returns> Confirm state of request </returns>
 
         [Authorize(Policy = "Admin")]
         [HttpDelete("Hard/{id}")]
@@ -137,6 +169,13 @@ namespace EntregaFinalAcademia.Controllers
             }
 
         }
+
+
+        /// <summary>
+        ///  Delete a Job by state
+        /// </summary>
+        /// <returns> Confirm state of request </returns>
+        
 
         [Authorize(Policy = "Admin")]
         [HttpDelete("Soft/{id}")]

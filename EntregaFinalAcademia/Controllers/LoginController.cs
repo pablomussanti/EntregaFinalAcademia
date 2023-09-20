@@ -19,6 +19,12 @@ namespace EntregaFinalAcademia.Controllers
             _tokenJwtHelper = new TokenJwtHelper(configuration);
         }
 
+
+        /// <summary>
+        ///  Log in User
+        /// </summary>
+        /// <returns> User Token </returns>
+       
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Login(AuthenticateDto dto)
