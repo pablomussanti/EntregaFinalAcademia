@@ -1,8 +1,11 @@
 ﻿using EntregaFinalAcademia.DTOs;
 using EntregaFinalAcademia.Entities;
+using EntregaFinalAcademia.Helpers;
+using EntregaFinalAcademia.Infrastructure;
 using EntregaFinalAcademia.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace EntregaFinalAcademia.Controllers
 {
@@ -19,47 +22,78 @@ namespace EntregaFinalAcademia.Controllers
         }
 
 
+        /// <summary>
+        ///  Get all Jobs without state
+        /// </summary>
+        /// <returns> All jobs </returns>
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Job>>> GetAll()
+        public async Task<IActionResult> GetAll()
         {
             var jobs = await _unitOfWork.JobRepository.GetAll();
 
-            return jobs;
+            int pageToShow = 1;
+            if (Request.Query.ContainsKey("page")) int.TryParse(Request.Query["page"], out pageToShow);
+            var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
+            var paginateJobs = PaginateHelper.Paginate(jobs, pageToShow, url);
+
+            return ResponseFactory.CreateSuccessResponse(200, paginateJobs);
+
         }
+
+        /// <summary>
+        ///  Get all Jobs by state 
+        /// </summary>
+        /// <returns> List of jobs </returns>
 
         [HttpGet]
         [Route("ListState")]
-        public async Task<ActionResult<IEnumerable<Job>>> GetAllState(Boolean EstadoActivo)
+        public async Task<IActionResult> GetAllState(Boolean EstadoActivo)
         {
-            var Jobs = await _unitOfWork.JobRepository.GetAll();
-            var listaCompletaJobs = new List<Job>();
 
-            foreach (var job in Jobs)
-            {
-                if (EstadoActivo == true && job.Estado == true)
+                var Jobs = await _unitOfWork.JobRepository.GetAll();
+                var listaCompletaJobs = new List<Job>();
+
+                foreach (var job in Jobs)
                 {
-                    listaCompletaJobs.Add(job);
+                    if (EstadoActivo == true && job.Estado == true)
+                    {
+                        listaCompletaJobs.Add(job);
+                    }
+
+                    if (EstadoActivo == false && job.Estado == false)
+                    {
+                        listaCompletaJobs.Add(job);
+                    }
                 }
 
-                if (EstadoActivo == false && job.Estado == false)
-                {
-                    listaCompletaJobs.Add(job);
-                }
-            }
-            return listaCompletaJobs;
+            int pageToShow = 1;
+            if (Request.Query.ContainsKey("page")) int.TryParse(Request.Query["page"], out pageToShow);
+            var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
+            var paginateJobs = PaginateHelper.Paginate(listaCompletaJobs, pageToShow, url);
+
+            return ResponseFactory.CreateSuccessResponse(200, paginateJobs);
+           
         }
 
+        /// <summary>
+        ///  Get a job by id
+        /// </summary>
+        /// <returns> A Job </returns>
 
         [HttpGet]
         [Route("GetById")]
-        public async Task<ActionResult<Job>> GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
             var job = await _unitOfWork.JobRepository.GetById(id);
 
-            return job;
+            return ResponseFactory.CreateSuccessResponse(200, job);
         }
 
+        /// <summary>
+        ///  Create a Job
+        /// </summary>
+        /// <returns> Confirm state of request </returns>
 
         [Authorize(Policy = "Admin")]
         [HttpPost]
@@ -68,11 +102,24 @@ namespace EntregaFinalAcademia.Controllers
         {
 
             var job = new Job(dto);
-            await _unitOfWork.JobRepository.Insert(job);
-            await _unitOfWork.Complete();
-            return Ok(true);
+            var result = await _unitOfWork.JobRepository.Insert(job);
+
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "Error al crear el trabajo");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(201, "Trabajo creado con exito");
+            }
         }
 
+
+        /// <summary>
+        ///  Update a Job
+        /// </summary>
+        /// <returns> Confirm state of request </returns>
 
         [Authorize(Policy = "Admin")]
         [HttpPut("{id}")]
@@ -80,10 +127,21 @@ namespace EntregaFinalAcademia.Controllers
         {
             var result = await _unitOfWork.JobRepository.Update(new Job(dto, id));
 
-            await _unitOfWork.Complete();
-            return Ok(true);
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "Error al modificar el trabajo");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(200, "Trabajo modificado con exito");
+            }
         }
 
+        /// <summary>
+        ///  Delete a job 
+        /// </summary>
+        /// <returns> Confirm state of request </returns>
 
         [Authorize(Policy = "Admin")]
         [HttpDelete("Hard/{id}")]
@@ -91,10 +149,21 @@ namespace EntregaFinalAcademia.Controllers
         {
             var result = await _unitOfWork.JobRepository.HardDelete(id);
 
-            await _unitOfWork.Complete();
-            return Ok(true);
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "Error al eliminar el trabajo");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(200, "Trabajo eliminado con exito");
+            }
         }
 
+        /// <summary>
+        ///  Delete a job by state
+        /// </summary>
+        /// <returns> Confirm state of request </returns>
 
         [Authorize(Policy = "Admin")]
         [HttpDelete("Soft/{id}")]
@@ -102,8 +171,15 @@ namespace EntregaFinalAcademia.Controllers
         {
             var result = await _unitOfWork.JobRepository.SoftDelete(id);
 
-            await _unitOfWork.Complete();
-            return Ok(true);
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "Error al eliminar el trabajo");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(200, "Trabajo eliminado con exito");
+            }
         }
 
 

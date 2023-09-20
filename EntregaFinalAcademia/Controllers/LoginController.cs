@@ -1,5 +1,6 @@
 ﻿using EntregaFinalAcademia.DTOs;
 using EntregaFinalAcademia.Helpers;
+using EntregaFinalAcademia.Infrastructure;
 using EntregaFinalAcademia.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +19,12 @@ namespace EntregaFinalAcademia.Controllers
             _tokenJwtHelper = new TokenJwtHelper(configuration);
         }
 
+
+        /// <summary>
+        ///  Log in User
+        /// </summary>
+        /// <returns> User Token </returns>
+       
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Login(AuthenticateDto dto)
@@ -37,7 +44,7 @@ namespace EntregaFinalAcademia.Controllers
             };
 
 
-            return Ok(user);
+            return ResponseFactory.CreateSuccessResponse(200,user);
 
         }
     }

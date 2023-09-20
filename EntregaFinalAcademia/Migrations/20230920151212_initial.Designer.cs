@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EntregaFinalAcademia.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230919232612_initial")]
+    [Migration("20230920151212_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,8 +43,8 @@ namespace EntregaFinalAcademia.Migrations
                     b.Property<int>("CodServicio")
                         .HasColumnType("int");
 
-                    b.Property<double>("Costo")
-                        .HasColumnType("float")
+                    b.Property<decimal>("Costo")
+                        .HasColumnType("decimal(38,17)")
                         .HasColumnName("job_costo");
 
                     b.Property<bool>("Estado")
@@ -70,9 +70,9 @@ namespace EntregaFinalAcademia.Migrations
                             CantHoras = 20,
                             CodProyecto = 1,
                             CodServicio = 1,
-                            Costo = 2000.0,
+                            Costo = 2000m,
                             Estado = true,
-                            Fecha = new DateTime(2023, 9, 19, 20, 26, 12, 55, DateTimeKind.Local).AddTicks(5405),
+                            Fecha = new DateTime(2023, 9, 20, 12, 12, 12, 217, DateTimeKind.Local).AddTicks(594),
                             ValorHora = 100.0
                         });
                 });
@@ -115,7 +115,23 @@ namespace EntregaFinalAcademia.Migrations
                             Direccion = "Santa Fe 29475",
                             Estado = 1,
                             EstadoActivo = true,
-                            Nombre = "Proyecto 1"
+                            Nombre = "Proyecto A"
+                        },
+                        new
+                        {
+                            CodProyecto = 2,
+                            Direccion = "Suipacha 2923",
+                            Estado = 2,
+                            EstadoActivo = true,
+                            Nombre = "Proyecto B"
+                        },
+                        new
+                        {
+                            CodProyecto = 3,
+                            Direccion = "Ferro 14545",
+                            Estado = 3,
+                            EstadoActivo = true,
+                            Nombre = "Proyecto C"
                         });
                 });
 
@@ -158,8 +174,8 @@ namespace EntregaFinalAcademia.Migrations
                         {
                             Id = 2,
                             Activo = true,
-                            Description = "Consulta",
-                            Name = "Consulta"
+                            Description = "Consultor",
+                            Name = "Consultor"
                         });
                 });
 
@@ -194,6 +210,13 @@ namespace EntregaFinalAcademia.Migrations
                         {
                             codServicio = 1,
                             descr = "Reparacion",
+                            estado = true,
+                            valorHora = 250.0
+                        },
+                        new
+                        {
+                            codServicio = 2,
+                            descr = "Mantenimiento",
                             estado = true,
                             valorHora = 100.0
                         });
@@ -245,7 +268,7 @@ namespace EntregaFinalAcademia.Migrations
                         new
                         {
                             CodUsuario = 1,
-                            Clave = "5109bec004a04a6aa18a05aef0856af673b1a889b5f142b725cb65875dd8adbd",
+                            Clave = "e5c92d3ab3273a76fc60e0358552affe0e7f3fc68287c6f3bd463400cf7309c3",
                             Dni = 11111111.0,
                             Email = "admin@hotmail.com",
                             Estado = true,

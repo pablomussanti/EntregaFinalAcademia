@@ -20,8 +20,8 @@ namespace EntregaFinalAcademia.DataAcess.DatabaseSeeding
                  new Role
                  {
                      Id = 2,
-                     Name = "Consulta",
-                     Description = "Consulta",
+                     Name = "Consultor",
+                     Description = "Consultor",
                      Activo = true,
                  });
         }

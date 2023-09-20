@@ -1,5 +1,7 @@
 ﻿using EntregaFinalAcademia.DTOs;
 using EntregaFinalAcademia.Entities;
+using EntregaFinalAcademia.Helpers;
+using EntregaFinalAcademia.Infrastructure;
 using EntregaFinalAcademia.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,17 +20,35 @@ namespace EntregaFinalAcademia.Controllers
         }
 
 
+        /// <summary>
+        ///  Get All Services
+        /// </summary>
+        /// <returns>List of Services</returns>
+
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Service>>> GetAll()
+        public async Task<IActionResult> GetAll()
         {
             var services = await _unitOfWork.ServiceRepository.GetAll();
 
-            return services;
+            int pageToShow = 1;
+            if (Request.Query.ContainsKey("page")) int.TryParse(Request.Query["page"], out pageToShow);
+            var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
+            var paginateServices = PaginateHelper.Paginate(services, pageToShow, url);
+
+            return ResponseFactory.CreateSuccessResponse(200, paginateServices);
         }
+
+
+        /// <summary>
+        ///  Get All Services by state
+        /// </summary>
+        /// <returns>List of Roles</returns>
+
 
         [HttpGet]
         [Route("ListState")]
-        public async Task<ActionResult<IEnumerable<Service>>> GetAllState(Boolean EstadoActivo)
+        public async Task<IActionResult> GetAllState(Boolean EstadoActivo)
         {
             var services = await _unitOfWork.ServiceRepository.GetAll();
             var listaCompletaServices = new List<Service>();
@@ -45,17 +65,38 @@ namespace EntregaFinalAcademia.Controllers
                     listaCompletaServices.Add(srv);
                 }
             }
-            return listaCompletaServices;
+
+            int pageToShow = 1;
+            if (Request.Query.ContainsKey("page")) int.TryParse(Request.Query["page"], out pageToShow);
+            var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
+            var paginateServices = PaginateHelper.Paginate(listaCompletaServices, pageToShow, url);
+
+            return ResponseFactory.CreateSuccessResponse(200, paginateServices);
+
         }
+
+
+        /// <summary>
+        ///  Get a Service
+        /// </summary>
+        /// <returns>A Service</returns>
+
 
         [HttpGet]
         [Route("GetById")]
-        public async Task<ActionResult<Service>> GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
             var service = await _unitOfWork.ServiceRepository.GetById(id);
 
-            return service;
+            return ResponseFactory.CreateSuccessResponse(200, service);
         }
+
+
+        /// <summary>
+        ///  Create a Service
+        /// </summary>
+        /// <returns> Confirm state of request </returns>
+
 
 
         [Authorize(Policy = "Admin")]
@@ -65,10 +106,27 @@ namespace EntregaFinalAcademia.Controllers
         {
 
             var service = new Service(dto);
-            await _unitOfWork.ServiceRepository.Insert(service);
-            await _unitOfWork.Complete();
-            return Ok(true);
+            var result = await _unitOfWork.ServiceRepository.Insert(service);
+
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "Error al crear el servicio");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(201, "Servicio creado con exito");
+            }
+
         }
+
+
+        /// <summary>
+        ///  Update a Service
+        /// </summary>
+        /// <returns> Confirm state of request </returns>
+
+
 
         [Authorize(Policy = "Admin")]
         [HttpPut("{id}")]
@@ -77,9 +135,26 @@ namespace EntregaFinalAcademia.Controllers
         {
             var result = await _unitOfWork.ServiceRepository.Update(new Service(dto, id));
 
-            await _unitOfWork.Complete();
-            return Ok(true);
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "Error al modificar el servicio");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(200, "Servicio modificado con exito");
+            }
+
         }
+
+
+
+        /// <summary>
+        ///  Delete a Service
+        /// </summary>
+        /// <returns> Confirm state of request </returns>
+
+
 
         [Authorize(Policy = "Admin")]
         [HttpDelete("Hard/{id}")]
@@ -88,9 +163,25 @@ namespace EntregaFinalAcademia.Controllers
         {
             var result = await _unitOfWork.ServiceRepository.HardDelete(id);
 
-            await _unitOfWork.Complete();
-            return Ok(true);
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "Error al eliminar el servicio");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(200, "Servicio eliminado con exito");
+            }
         }
+
+
+
+        /// <summary>
+        ///  Delete a Service by state
+        /// </summary>
+        /// <returns> Confirm state of request </returns>
+
+
 
         [Authorize(Policy = "Admin")]
         [HttpDelete("Soft/{id}")]
@@ -99,8 +190,16 @@ namespace EntregaFinalAcademia.Controllers
         {
             var result = await _unitOfWork.ServiceRepository.SoftDelete(id);
 
-            await _unitOfWork.Complete();
-            return Ok(true);
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "Error al eliminar el servicio");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(200, "Servicio eliminado con exito");
+            }
+
         }
 
     }
