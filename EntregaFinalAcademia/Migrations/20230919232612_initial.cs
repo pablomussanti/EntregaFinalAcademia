@@ -82,25 +82,26 @@ namespace EntregaFinalAcademia.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     user_dni = table.Column<double>(type: "float", nullable: false),
                     user_nombre = table.Column<string>(type: "VARCHAR(100)", nullable: false),
-                    user_tipo = table.Column<int>(type: "int", nullable: false),
-                    user_clave = table.Column<string>(type: "VARCHAR(60)", nullable: false),
-                    RoleId = table.Column<int>(type: "int", nullable: true),
-                    user_estado = table.Column<bool>(type: "bit", nullable: false)
+                    user_email = table.Column<string>(type: "VARCHAR(100)", nullable: false),
+                    user_clave = table.Column<string>(type: "VARCHAR(250)", nullable: false),
+                    user_estado = table.Column<bool>(type: "bit", nullable: false),
+                    role_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.user_id);
                     table.ForeignKey(
-                        name: "FK_Users_Roles_RoleId",
-                        column: x => x.RoleId,
+                        name: "FK_Users_Roles_role_id",
+                        column: x => x.role_id,
                         principalTable: "Roles",
-                        principalColumn: "role_id");
+                        principalColumn: "role_id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
                 table: "Jobs",
                 columns: new[] { "job_id", "job_cantHoras", "CodProyecto", "CodServicio", "job_costo", "job_estado", "job_date", "job_valorHora" },
-                values: new object[] { 1, 20, 1, 1, 2000.0, true, new DateTime(2023, 9, 19, 13, 23, 24, 132, DateTimeKind.Local).AddTicks(9848), 100.0 });
+                values: new object[] { 1, 20, 1, 1, 2000.0, true, new DateTime(2023, 9, 19, 20, 26, 12, 55, DateTimeKind.Local).AddTicks(5405), 100.0 });
 
             migrationBuilder.InsertData(
                 table: "Proyects",
@@ -123,13 +124,13 @@ namespace EntregaFinalAcademia.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "user_id", "user_clave", "user_dni", "user_estado", "user_nombre", "RoleId", "user_tipo" },
-                values: new object[] { 1, "1234", 40951295.0, true, "Pedro", null, 1 });
+                columns: new[] { "user_id", "user_clave", "user_dni", "user_email", "user_estado", "user_nombre", "role_id" },
+                values: new object[] { 1, "5109bec004a04a6aa18a05aef0856af673b1a889b5f142b725cb65875dd8adbd", 11111111.0, "admin@hotmail.com", true, "Admin", 1 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_RoleId",
+                name: "IX_Users_role_id",
                 table: "Users",
-                column: "RoleId");
+                column: "role_id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

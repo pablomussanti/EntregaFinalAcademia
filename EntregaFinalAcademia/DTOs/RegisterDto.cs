@@ -9,8 +9,9 @@ namespace EntregaFinalAcademia.DTOs
     {
         public int Dni { get; set; }
         public string Nombre { get; set; }
-        public int Tipo { get; set; }
+        public int RoleId { get; internal set; }
         public string Clave { get; set; }
+        public string Email { get; set; }
         public Boolean Estado { get; set; }
     }
 }
