@@ -8,6 +8,7 @@ namespace EntregaFinalAcademia.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class JobController : ControllerBase
     {
 
@@ -60,7 +61,7 @@ namespace EntregaFinalAcademia.Controllers
         }
 
 
-
+        [Authorize(Policy = "Admin")]
         [HttpPost]
         [Route("Create")]
         public async Task<IActionResult> Insert(JobDto dto)
@@ -73,7 +74,7 @@ namespace EntregaFinalAcademia.Controllers
         }
 
 
-
+        [Authorize(Policy = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute] int id, JobDto dto)
         {
@@ -84,6 +85,7 @@ namespace EntregaFinalAcademia.Controllers
         }
 
 
+        [Authorize(Policy = "Admin")]
         [HttpDelete("Hard/{id}")]
         public async Task<IActionResult> HardDelete([FromRoute] int id)
         {
@@ -93,6 +95,8 @@ namespace EntregaFinalAcademia.Controllers
             return Ok(true);
         }
 
+
+        [Authorize(Policy = "Admin")]
         [HttpDelete("Soft/{id}")]
         public async Task<IActionResult> SoftDelete([FromRoute] int id)
         {

@@ -1,4 +1,5 @@
 ﻿using EntregaFinalAcademia.Entities;
+using EntregaFinalAcademia.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 namespace EntregaFinalAcademia.DataAcess.DatabaseSeeding
@@ -11,11 +12,12 @@ namespace EntregaFinalAcademia.DataAcess.DatabaseSeeding
                 new User
                 {
                     CodUsuario = 1,
-                    Clave = "Admin",
                     Dni = 11111111,
                     Nombre = "Admin",
-                    Tipo = 1,
-                    Estado = true
+                    RoleId = 1,
+                    Estado = true,
+                    Email = "admin@hotmail.com",
+                    Clave = PasswordEncryptHelper.EncryptPassword("1234", "admin@hotmail.com")
                 });
         }
     }

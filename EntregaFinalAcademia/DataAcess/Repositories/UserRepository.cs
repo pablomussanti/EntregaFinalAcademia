@@ -2,6 +2,7 @@
 using EntregaFinalAcademia.Entities;
 using Microsoft.EntityFrameworkCore;
 using EntregaFinalAcademia.DTOs;
+using EntregaFinalAcademia.Helpers;
 
 namespace EntregaFinalAcademia.DataAcess.Repositories
 {
@@ -55,9 +56,13 @@ namespace EntregaFinalAcademia.DataAcess.Repositories
             return true;
         }
 
-        //public async Task<User?> AuthenticateCredentials(AuthenticateDto dto)
-        //{
-        //    return await _context.Users.SingleOrDefaultAsync(x => x.Email == dto.Email && x.Password == PasswordEncryptHelper.EncryptPassword(dto.Password));
-        //}
+        public async Task<User?> AuthenticateCredentials(AuthenticateDto dto)
+        {
+            return await _context.Users.Include(x => x.Role).SingleOrDefaultAsync(x => x.Email == dto.Email && x.Clave == PasswordEncryptHelper.EncryptPassword(dto.Password, dto.Email));
+        }
+        public async Task<bool> UserEx(string email)
+        {
+            return await _context.Users.AnyAsync(x => x.Email == email);
+        }
     }
 }
