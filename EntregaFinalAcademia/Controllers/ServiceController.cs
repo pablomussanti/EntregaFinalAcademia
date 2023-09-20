@@ -1,5 +1,6 @@
 ﻿using EntregaFinalAcademia.DTOs;
 using EntregaFinalAcademia.Entities;
+using EntregaFinalAcademia.Infrastructure;
 using EntregaFinalAcademia.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -65,9 +66,18 @@ namespace EntregaFinalAcademia.Controllers
         {
 
             var service = new Service(dto);
-            await _unitOfWork.ServiceRepository.Insert(service);
-            await _unitOfWork.Complete();
-            return Ok(true);
+            var result = await _unitOfWork.ServiceRepository.Insert(service);
+
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "Error al crear el servicio");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(201, "Servicio creado con exito");
+            }
+
         }
 
         [Authorize(Policy = "Admin")]
@@ -77,8 +87,16 @@ namespace EntregaFinalAcademia.Controllers
         {
             var result = await _unitOfWork.ServiceRepository.Update(new Service(dto, id));
 
-            await _unitOfWork.Complete();
-            return Ok(true);
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "Error al modificar el servicio");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(200, "Servicio modificado con exito");
+            }
+
         }
 
         [Authorize(Policy = "Admin")]
@@ -88,8 +106,15 @@ namespace EntregaFinalAcademia.Controllers
         {
             var result = await _unitOfWork.ServiceRepository.HardDelete(id);
 
-            await _unitOfWork.Complete();
-            return Ok(true);
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "Error al eliminar el servicio");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(200, "Servicio eliminado con exito");
+            }
         }
 
         [Authorize(Policy = "Admin")]
@@ -99,8 +124,16 @@ namespace EntregaFinalAcademia.Controllers
         {
             var result = await _unitOfWork.ServiceRepository.SoftDelete(id);
 
-            await _unitOfWork.Complete();
-            return Ok(true);
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "Error al eliminar el servicio");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(200, "Servicio eliminado con exito");
+            }
+
         }
 
     }
