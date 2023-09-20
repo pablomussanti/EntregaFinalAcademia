@@ -20,6 +20,10 @@ namespace EntregaFinalAcademia.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        /// <summary>
+        ///  Get All Users
+        /// </summary>
+        /// <returns> List of Users </returns>
 
         [Authorize]
         [HttpGet]
@@ -34,6 +38,13 @@ namespace EntregaFinalAcademia.Controllers
 
             return ResponseFactory.CreateSuccessResponse(200, paginateUsers);
         }
+
+
+        /// <summary>
+        ///  Get All Users by state
+        /// </summary>
+        /// <returns> List of Users </returns>
+
 
         [Authorize]
         [HttpGet]
@@ -64,6 +75,15 @@ namespace EntregaFinalAcademia.Controllers
             return ResponseFactory.CreateSuccessResponse(200, paginateUsers);
         }
 
+
+
+        /// <summary>
+        ///  Get a User by ID
+        /// </summary>
+        /// <returns> A User </returns>
+
+
+
         [Authorize]
         [HttpGet]
         [Route("GetById")]
@@ -73,6 +93,15 @@ namespace EntregaFinalAcademia.Controllers
 
             return ResponseFactory.CreateSuccessResponse(200, user);
         }
+
+
+
+        /// <summary>
+        ///  Create a User
+        /// </summary>
+        /// <returns> Confirm state of request </returns>
+
+
 
 
         [AllowAnonymous]
@@ -97,6 +126,16 @@ namespace EntregaFinalAcademia.Controllers
 
         }
 
+
+
+        /// <summary>
+        ///  Update a User
+        /// </summary>
+        /// <returns> Confirm state of request </returns>
+
+
+
+
         [Authorize(Policy = "Admin")]
         [HttpPut("{id}")]
 
@@ -115,6 +154,16 @@ namespace EntregaFinalAcademia.Controllers
             }
         }
 
+
+
+        /// <summary>
+        ///  Delete a User
+        /// </summary>
+        /// <returns> Confirm state of request </returns>
+
+
+
+
         [Authorize(Policy = "Admin")]
         [HttpDelete("Hard/{id}")]
 
@@ -132,6 +181,15 @@ namespace EntregaFinalAcademia.Controllers
                 return ResponseFactory.CreateSuccessResponse(200, "Usuario eliminado con exito");
             }
         }
+
+
+
+        /// <summary>
+        ///  Delete a User by state
+        /// </summary>
+        /// <returns> Confirm state of request </returns>
+
+
 
         [Authorize(Policy = "Admin")]
         [HttpDelete("Soft/{id}")]

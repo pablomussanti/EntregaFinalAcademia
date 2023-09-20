@@ -17,7 +17,7 @@ namespace EntregaFinalAcademia.DataAcess.DatabaseSeeding
                     RoleId = 1,
                     Estado = true,
                     Email = "admin@hotmail.com",
-                    Clave = PasswordEncryptHelper.EncryptPassword("1234", "admin@hotmail.com")
+                    Clave = PasswordEncryptHelper.EncryptPassword("admin", "admin@hotmail.com")
                 });
         }
     }

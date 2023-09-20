@@ -20,6 +20,12 @@ namespace EntregaFinalAcademia.Controllers
         }
 
 
+        /// <summary>
+        ///  Get All Services
+        /// </summary>
+        /// <returns>List of Services</returns>
+
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -32,6 +38,13 @@ namespace EntregaFinalAcademia.Controllers
 
             return ResponseFactory.CreateSuccessResponse(200, paginateServices);
         }
+
+
+        /// <summary>
+        ///  Get All Services by state
+        /// </summary>
+        /// <returns>List of Roles</returns>
+
 
         [HttpGet]
         [Route("ListState")]
@@ -62,6 +75,13 @@ namespace EntregaFinalAcademia.Controllers
 
         }
 
+
+        /// <summary>
+        ///  Get a Service
+        /// </summary>
+        /// <returns>A Service</returns>
+
+
         [HttpGet]
         [Route("GetById")]
         public async Task<IActionResult> GetById(int id)
@@ -70,6 +90,13 @@ namespace EntregaFinalAcademia.Controllers
 
             return ResponseFactory.CreateSuccessResponse(200, service);
         }
+
+
+        /// <summary>
+        ///  Create a Service
+        /// </summary>
+        /// <returns> Confirm state of request </returns>
+
 
 
         [Authorize(Policy = "Admin")]
@@ -93,6 +120,14 @@ namespace EntregaFinalAcademia.Controllers
 
         }
 
+
+        /// <summary>
+        ///  Update a Service
+        /// </summary>
+        /// <returns> Confirm state of request </returns>
+
+
+
         [Authorize(Policy = "Admin")]
         [HttpPut("{id}")]
 
@@ -112,6 +147,15 @@ namespace EntregaFinalAcademia.Controllers
 
         }
 
+
+
+        /// <summary>
+        ///  Delete a Service
+        /// </summary>
+        /// <returns> Confirm state of request </returns>
+
+
+
         [Authorize(Policy = "Admin")]
         [HttpDelete("Hard/{id}")]
 
@@ -129,6 +173,15 @@ namespace EntregaFinalAcademia.Controllers
                 return ResponseFactory.CreateSuccessResponse(200, "Servicio eliminado con exito");
             }
         }
+
+
+
+        /// <summary>
+        ///  Delete a Service by state
+        /// </summary>
+        /// <returns> Confirm state of request </returns>
+
+
 
         [Authorize(Policy = "Admin")]
         [HttpDelete("Soft/{id}")]

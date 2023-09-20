@@ -20,7 +20,7 @@ namespace EntregaFinalAcademia.Migrations
                     CodServicio = table.Column<int>(type: "int", nullable: false),
                     job_cantHoras = table.Column<int>(type: "int", nullable: false),
                     job_valorHora = table.Column<double>(type: "float", nullable: false),
-                    job_costo = table.Column<double>(type: "float", nullable: false),
+                    job_costo = table.Column<decimal>(type: "decimal(38,17)", nullable: false),
                     job_estado = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -101,12 +101,17 @@ namespace EntregaFinalAcademia.Migrations
             migrationBuilder.InsertData(
                 table: "Jobs",
                 columns: new[] { "job_id", "job_cantHoras", "CodProyecto", "CodServicio", "job_costo", "job_estado", "job_date", "job_valorHora" },
-                values: new object[] { 1, 20, 1, 1, 2000.0, true, new DateTime(2023, 9, 19, 20, 26, 12, 55, DateTimeKind.Local).AddTicks(5405), 100.0 });
+                values: new object[] { 1, 20, 1, 1, 2000m, true, new DateTime(2023, 9, 20, 12, 12, 12, 217, DateTimeKind.Local).AddTicks(594), 100.0 });
 
             migrationBuilder.InsertData(
                 table: "Proyects",
                 columns: new[] { "proyect_id", "proyect_direccion", "proyect_estado", "proyect_estadoActivo", "proyect_nombre" },
-                values: new object[] { 1, "Santa Fe 29475", 1, true, "Proyecto 1" });
+                values: new object[,]
+                {
+                    { 1, "Santa Fe 29475", 1, true, "Proyecto A" },
+                    { 2, "Suipacha 2923", 2, true, "Proyecto B" },
+                    { 3, "Ferro 14545", 3, true, "Proyecto C" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Roles",
@@ -114,18 +119,22 @@ namespace EntregaFinalAcademia.Migrations
                 values: new object[,]
                 {
                     { 1, true, "Admin", "Admin" },
-                    { 2, true, "Consulta", "Consulta" }
+                    { 2, true, "Consultor", "Consultor" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Services",
                 columns: new[] { "service_id", "service_descr", "service_estado", "service_valorHora" },
-                values: new object[] { 1, "Reparacion", true, 100.0 });
+                values: new object[,]
+                {
+                    { 1, "Reparacion", true, 250.0 },
+                    { 2, "Mantenimiento", true, 100.0 }
+                });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "user_id", "user_clave", "user_dni", "user_email", "user_estado", "user_nombre", "role_id" },
-                values: new object[] { 1, "5109bec004a04a6aa18a05aef0856af673b1a889b5f142b725cb65875dd8adbd", 11111111.0, "admin@hotmail.com", true, "Admin", 1 });
+                values: new object[] { 1, "e5c92d3ab3273a76fc60e0358552affe0e7f3fc68287c6f3bd463400cf7309c3", 11111111.0, "admin@hotmail.com", true, "Admin", 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_role_id",

@@ -22,6 +22,10 @@ namespace EntregaFinalAcademia.Controllers
         }
 
 
+        /// <summary>
+        ///  Get all Jobs without state
+        /// </summary>
+        /// <returns> All jobs </returns>
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
@@ -36,6 +40,11 @@ namespace EntregaFinalAcademia.Controllers
             return ResponseFactory.CreateSuccessResponse(200, paginateJobs);
 
         }
+
+        /// <summary>
+        ///  Get all Jobs by state 
+        /// </summary>
+        /// <returns> List of jobs </returns>
 
         [HttpGet]
         [Route("ListState")]
@@ -67,6 +76,10 @@ namespace EntregaFinalAcademia.Controllers
            
         }
 
+        /// <summary>
+        ///  Get a job by id
+        /// </summary>
+        /// <returns> A Job </returns>
 
         [HttpGet]
         [Route("GetById")]
@@ -77,6 +90,10 @@ namespace EntregaFinalAcademia.Controllers
             return ResponseFactory.CreateSuccessResponse(200, job);
         }
 
+        /// <summary>
+        ///  Create a Job
+        /// </summary>
+        /// <returns> Confirm state of request </returns>
 
         [Authorize(Policy = "Admin")]
         [HttpPost]
@@ -99,6 +116,11 @@ namespace EntregaFinalAcademia.Controllers
         }
 
 
+        /// <summary>
+        ///  Update a Job
+        /// </summary>
+        /// <returns> Confirm state of request </returns>
+
         [Authorize(Policy = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute] int id, JobDto dto)
@@ -116,6 +138,10 @@ namespace EntregaFinalAcademia.Controllers
             }
         }
 
+        /// <summary>
+        ///  Delete a job 
+        /// </summary>
+        /// <returns> Confirm state of request </returns>
 
         [Authorize(Policy = "Admin")]
         [HttpDelete("Hard/{id}")]
@@ -134,6 +160,10 @@ namespace EntregaFinalAcademia.Controllers
             }
         }
 
+        /// <summary>
+        ///  Delete a job by state
+        /// </summary>
+        /// <returns> Confirm state of request </returns>
 
         [Authorize(Policy = "Admin")]
         [HttpDelete("Soft/{id}")]

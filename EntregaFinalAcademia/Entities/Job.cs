@@ -34,7 +34,7 @@ namespace EntregaFinalAcademia.Entities
         public double ValorHora { get; set; }
 
         [Required]
-        [Column("job_costo", TypeName = "float")]
+        [Column("job_costo", TypeName = "decimal")]
         public double Costo { get; set; }
 
         [Required]

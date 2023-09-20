@@ -20,6 +20,10 @@ namespace EntregaFinalAcademia.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        /// <summary>
+        ///  Get All Roles
+        /// </summary>
+        /// <returns>List of Roles</returns>
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
@@ -33,6 +37,10 @@ namespace EntregaFinalAcademia.Controllers
             return ResponseFactory.CreateSuccessResponse(200, paginateRoles);
         }
 
+        /// <summary>
+        ///  Create a new Role
+        /// </summary>
+        /// <returns> Confirm state of request </returns>
 
         [Authorize(Policy = "Admin")]
         [HttpPost]
@@ -54,6 +62,11 @@ namespace EntregaFinalAcademia.Controllers
             }
         }
 
+        /// <summary>
+        ///  Update a role 
+        /// </summary>
+        /// <returns> Confirm state of request </returns>
+
         [Authorize(Policy = "Admin")]
         [HttpPut("{id}")]
 
@@ -71,6 +84,12 @@ namespace EntregaFinalAcademia.Controllers
                 return ResponseFactory.CreateSuccessResponse(200, "Rol modificado con exito");
             }
         }
+
+        /// <summary>
+        ///  Delete a Role
+        /// </summary>
+        /// <returns> Confirm state of request </returns>
+
 
         [Authorize(Policy = "Admin")]
         [HttpDelete("{id}")]
