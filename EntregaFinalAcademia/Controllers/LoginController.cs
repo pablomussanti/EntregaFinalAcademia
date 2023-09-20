@@ -1,5 +1,6 @@
 ﻿using EntregaFinalAcademia.DTOs;
 using EntregaFinalAcademia.Helpers;
+using EntregaFinalAcademia.Infrastructure;
 using EntregaFinalAcademia.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -37,7 +38,7 @@ namespace EntregaFinalAcademia.Controllers
             };
 
 
-            return Ok(user);
+            return ResponseFactory.CreateSuccessResponse(200,user);
 
         }
     }

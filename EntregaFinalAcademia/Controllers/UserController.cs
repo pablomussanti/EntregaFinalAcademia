@@ -1,5 +1,6 @@
 ﻿using EntregaFinalAcademia.DTOs;
 using EntregaFinalAcademia.Entities;
+using EntregaFinalAcademia.Infrastructure;
 using EntregaFinalAcademia.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -48,6 +49,7 @@ namespace EntregaFinalAcademia.Controllers
                     listaCompletaUsers.Add(usr);
                 }
             }
+
             return listaCompletaUsers;
         }
 
@@ -70,9 +72,18 @@ namespace EntregaFinalAcademia.Controllers
 
             if (await _unitOfWork.UserRepository.UserEx(dto.Email)) return Ok($"Ya existe un usuario registrado con el mail:{dto.Email}");
             var user = new User(dto);
-            await _unitOfWork.UserRepository.Insert(user);
-            await _unitOfWork.Complete();
-            return Ok(true);
+            var result = await _unitOfWork.UserRepository.Insert(user);
+
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "Error al crear el usuario");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(201, "Usuario creado con exito");
+            }
+
         }
 
         [Authorize(Policy = "Admin")]
@@ -82,8 +93,15 @@ namespace EntregaFinalAcademia.Controllers
         {
             var result = await _unitOfWork.UserRepository.Update(new User(dto, id));
 
-            await _unitOfWork.Complete();
-            return Ok(true);
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "Error al modificar el usuario");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(200, "Usuario modificado con exito");
+            }
         }
 
         [Authorize(Policy = "Admin")]
@@ -93,8 +111,15 @@ namespace EntregaFinalAcademia.Controllers
         {
             var result = await _unitOfWork.UserRepository.HardDelete(id);
 
-            await _unitOfWork.Complete();
-            return Ok(true);
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "Error al eliminar el usuario");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(200, "Usuario eliminado con exito");
+            }
         }
 
         [Authorize(Policy = "Admin")]
@@ -104,8 +129,15 @@ namespace EntregaFinalAcademia.Controllers
         {
             var result = await _unitOfWork.UserRepository.SoftDelete(id);
 
-            await _unitOfWork.Complete();
-            return Ok(true);
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "Error al eliminar el usuario");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(200, "Usuario eliminado con exito");
+            }
         }
     }
 }

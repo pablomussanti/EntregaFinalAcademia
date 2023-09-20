@@ -1,5 +1,6 @@
 ﻿using EntregaFinalAcademia.DTOs;
 using EntregaFinalAcademia.Entities;
+using EntregaFinalAcademia.Infrastructure;
 using EntregaFinalAcademia.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -32,22 +33,24 @@ namespace EntregaFinalAcademia.Controllers
         [Route("ListState")]
         public async Task<ActionResult<IEnumerable<Job>>> GetAllState(Boolean EstadoActivo)
         {
-            var Jobs = await _unitOfWork.JobRepository.GetAll();
-            var listaCompletaJobs = new List<Job>();
 
-            foreach (var job in Jobs)
-            {
-                if (EstadoActivo == true && job.Estado == true)
-                {
-                    listaCompletaJobs.Add(job);
-                }
+                var Jobs = await _unitOfWork.JobRepository.GetAll();
+                var listaCompletaJobs = new List<Job>();
 
-                if (EstadoActivo == false && job.Estado == false)
+                foreach (var job in Jobs)
                 {
-                    listaCompletaJobs.Add(job);
+                    if (EstadoActivo == true && job.Estado == true)
+                    {
+                        listaCompletaJobs.Add(job);
+                    }
+
+                    if (EstadoActivo == false && job.Estado == false)
+                    {
+                        listaCompletaJobs.Add(job);
+                    }
                 }
-            }
-            return listaCompletaJobs;
+                return listaCompletaJobs;
+           
         }
 
 
@@ -68,9 +71,17 @@ namespace EntregaFinalAcademia.Controllers
         {
 
             var job = new Job(dto);
-            await _unitOfWork.JobRepository.Insert(job);
-            await _unitOfWork.Complete();
-            return Ok(true);
+            var result = await _unitOfWork.JobRepository.Insert(job);
+
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "Error al crear el trabajo");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(201, "Trabajo creado con exito");
+            }
         }
 
 
@@ -80,8 +91,15 @@ namespace EntregaFinalAcademia.Controllers
         {
             var result = await _unitOfWork.JobRepository.Update(new Job(dto, id));
 
-            await _unitOfWork.Complete();
-            return Ok(true);
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "Error al modificar el trabajo");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(200, "Trabajo modificado con exito");
+            }
         }
 
 
@@ -91,8 +109,15 @@ namespace EntregaFinalAcademia.Controllers
         {
             var result = await _unitOfWork.JobRepository.HardDelete(id);
 
-            await _unitOfWork.Complete();
-            return Ok(true);
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "Error al eliminar el trabajo");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(200, "Trabajo eliminado con exito");
+            }
         }
 
 
@@ -102,8 +127,15 @@ namespace EntregaFinalAcademia.Controllers
         {
             var result = await _unitOfWork.JobRepository.SoftDelete(id);
 
-            await _unitOfWork.Complete();
-            return Ok(true);
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "Error al eliminar el trabajo");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(200, "Trabajo eliminado con exito");
+            }
         }
 
 

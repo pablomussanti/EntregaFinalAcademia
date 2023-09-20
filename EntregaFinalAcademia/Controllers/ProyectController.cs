@@ -1,5 +1,6 @@
 ﻿using EntregaFinalAcademia.DTOs;
 using EntregaFinalAcademia.Entities;
+using EntregaFinalAcademia.Infrastructure;
 using EntregaFinalAcademia.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -73,9 +74,17 @@ namespace EntregaFinalAcademia.Controllers
         {
 
             var proyect = new Proyect(dto);
-            await _unitOfWork.ProyectRepository.Insert(proyect);
-            await _unitOfWork.Complete();
-            return Ok(true);
+            var result = await _unitOfWork.ProyectRepository.Insert(proyect);
+
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "Error al crear el proyecto");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(201, "Proyecto creado con exito");
+            }
         }
 
         [Authorize(Policy = "Admin")]
@@ -85,8 +94,16 @@ namespace EntregaFinalAcademia.Controllers
         {
             var result = await _unitOfWork.ProyectRepository.Update(new Proyect(dto, id));
 
-            await _unitOfWork.Complete();
-            return Ok(true);
+
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "Error al modificar el proyecto");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(200, "Proyecto modificado con exito");
+            }
         }
 
         [Authorize(Policy = "Admin")]
@@ -96,8 +113,17 @@ namespace EntregaFinalAcademia.Controllers
         {
             var result = await _unitOfWork.ProyectRepository.HardDelete(id);
 
-            await _unitOfWork.Complete();
-            return Ok(true);
+
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "Error al eliminar el proyecto");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(200, "Proyecto eliminado con exito");
+            }
+
         }
 
         [Authorize(Policy = "Admin")]
@@ -107,8 +133,16 @@ namespace EntregaFinalAcademia.Controllers
         {
             var result = await _unitOfWork.ProyectRepository.SoftDelete(id);
 
-            await _unitOfWork.Complete();
-            return Ok(true);
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "Error al eliminar el proyecto");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(200, "Proyecto eliminado con exito");
+            }
+
         }
     }
 }

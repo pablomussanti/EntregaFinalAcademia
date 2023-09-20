@@ -9,6 +9,10 @@ namespace EntregaFinalAcademia.DataAcess.Repositories
     public class UserRepository : Repository<User>, IUserRepository
     {
 
+        public override async Task<List<User>> GetAll()
+        {
+            return await _context.Users.Include(x => x.Role).ToListAsync();
+        }
         public UserRepository(ApplicationDbContext context) : base(context)
         {
 

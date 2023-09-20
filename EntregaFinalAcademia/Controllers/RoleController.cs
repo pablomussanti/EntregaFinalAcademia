@@ -1,5 +1,6 @@
 ﻿using EntregaFinalAcademia.DTOs;
 using EntregaFinalAcademia.Entities;
+using EntregaFinalAcademia.Infrastructure;
 using EntregaFinalAcademia.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -35,9 +36,17 @@ namespace EntregaFinalAcademia.Controllers
         {
 
             var Role = new Role(dto);
-            await _unitOfWork.RoleRepository.Insert(Role);
-            await _unitOfWork.Complete();
-            return Ok(true);
+            var result = await _unitOfWork.RoleRepository.Insert(Role);
+
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "Error al crear el rol");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(201, "Rol creado con exito");
+            }
         }
 
         [Authorize(Policy = "Admin")]
@@ -47,8 +56,15 @@ namespace EntregaFinalAcademia.Controllers
         {
             var result = await _unitOfWork.RoleRepository.Update(new Role(dto, id));
 
-            await _unitOfWork.Complete();
-            return Ok(true);
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "Error al modificar el rol");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(200, "Rol modificado con exito");
+            }
         }
 
         [Authorize(Policy = "Admin")]
@@ -58,8 +74,16 @@ namespace EntregaFinalAcademia.Controllers
         {
             var result = await _unitOfWork.RoleRepository.HardDelete(id);
 
-            await _unitOfWork.Complete();
-            return Ok(true);
+
+            if (!result)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "Error al eliminar el rol");
+            }
+            else
+            {
+                await _unitOfWork.Complete();
+                return ResponseFactory.CreateSuccessResponse(200, "Rol eliminado con exito");
+            }
         }
 
     }
