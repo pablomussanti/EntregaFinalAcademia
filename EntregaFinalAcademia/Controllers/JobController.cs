@@ -1,9 +1,11 @@
 ﻿using EntregaFinalAcademia.DTOs;
 using EntregaFinalAcademia.Entities;
+using EntregaFinalAcademia.Helpers;
 using EntregaFinalAcademia.Infrastructure;
 using EntregaFinalAcademia.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace EntregaFinalAcademia.Controllers
 {
@@ -22,16 +24,22 @@ namespace EntregaFinalAcademia.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Job>>> GetAll()
+        public async Task<IActionResult> GetAll()
         {
             var jobs = await _unitOfWork.JobRepository.GetAll();
 
-            return jobs;
+            int pageToShow = 1;
+            if (Request.Query.ContainsKey("page")) int.TryParse(Request.Query["page"], out pageToShow);
+            var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
+            var paginateJobs = PaginateHelper.Paginate(jobs, pageToShow, url);
+
+            return ResponseFactory.CreateSuccessResponse(200, paginateJobs);
+
         }
 
         [HttpGet]
         [Route("ListState")]
-        public async Task<ActionResult<IEnumerable<Job>>> GetAllState(Boolean EstadoActivo)
+        public async Task<IActionResult> GetAllState(Boolean EstadoActivo)
         {
 
                 var Jobs = await _unitOfWork.JobRepository.GetAll();
@@ -49,18 +57,24 @@ namespace EntregaFinalAcademia.Controllers
                         listaCompletaJobs.Add(job);
                     }
                 }
-                return listaCompletaJobs;
+
+            int pageToShow = 1;
+            if (Request.Query.ContainsKey("page")) int.TryParse(Request.Query["page"], out pageToShow);
+            var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
+            var paginateJobs = PaginateHelper.Paginate(listaCompletaJobs, pageToShow, url);
+
+            return ResponseFactory.CreateSuccessResponse(200, paginateJobs);
            
         }
 
 
         [HttpGet]
         [Route("GetById")]
-        public async Task<ActionResult<Job>> GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
             var job = await _unitOfWork.JobRepository.GetById(id);
 
-            return job;
+            return ResponseFactory.CreateSuccessResponse(200, job);
         }
 
 

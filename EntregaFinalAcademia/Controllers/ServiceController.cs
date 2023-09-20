@@ -1,5 +1,6 @@
 ﻿using EntregaFinalAcademia.DTOs;
 using EntregaFinalAcademia.Entities;
+using EntregaFinalAcademia.Helpers;
 using EntregaFinalAcademia.Infrastructure;
 using EntregaFinalAcademia.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -20,16 +21,21 @@ namespace EntregaFinalAcademia.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Service>>> GetAll()
+        public async Task<IActionResult> GetAll()
         {
             var services = await _unitOfWork.ServiceRepository.GetAll();
 
-            return services;
+            int pageToShow = 1;
+            if (Request.Query.ContainsKey("page")) int.TryParse(Request.Query["page"], out pageToShow);
+            var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
+            var paginateServices = PaginateHelper.Paginate(services, pageToShow, url);
+
+            return ResponseFactory.CreateSuccessResponse(200, paginateServices);
         }
 
         [HttpGet]
         [Route("ListState")]
-        public async Task<ActionResult<IEnumerable<Service>>> GetAllState(Boolean EstadoActivo)
+        public async Task<IActionResult> GetAllState(Boolean EstadoActivo)
         {
             var services = await _unitOfWork.ServiceRepository.GetAll();
             var listaCompletaServices = new List<Service>();
@@ -46,16 +52,23 @@ namespace EntregaFinalAcademia.Controllers
                     listaCompletaServices.Add(srv);
                 }
             }
-            return listaCompletaServices;
+
+            int pageToShow = 1;
+            if (Request.Query.ContainsKey("page")) int.TryParse(Request.Query["page"], out pageToShow);
+            var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
+            var paginateServices = PaginateHelper.Paginate(listaCompletaServices, pageToShow, url);
+
+            return ResponseFactory.CreateSuccessResponse(200, paginateServices);
+
         }
 
         [HttpGet]
         [Route("GetById")]
-        public async Task<ActionResult<Service>> GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
             var service = await _unitOfWork.ServiceRepository.GetById(id);
 
-            return service;
+            return ResponseFactory.CreateSuccessResponse(200, service);
         }
 
 
