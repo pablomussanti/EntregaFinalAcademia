@@ -9,13 +9,35 @@ namespace EntregaFinalAcademia.DataAcess.Repositories
     public class UserRepository : Repository<User>, IUserRepository
     {
 
+        public UserRepository(ApplicationDbContext context) : base(context)
+        {
+
+        }
+
         public override async Task<List<User>> GetAll()
         {
             return await _context.Users.Include(x => x.Role).ToListAsync();
         }
-        public UserRepository(ApplicationDbContext context) : base(context)
-        {
 
+        public override async Task<List<User>> GetAllByState(Boolean estado)
+        {
+            List<User> lista = await _context.Users.ToListAsync();
+            var listaFiltrada = new List<User>();
+
+            foreach (var usr in lista)
+            {
+                if (estado == true && usr.Estado == true)
+                {
+                    listaFiltrada.Add(usr);
+                }
+
+                if (estado == false && usr.Estado == false)
+                {
+                    listaFiltrada.Add(usr);
+                }
+            }
+
+            return listaFiltrada;
         }
 
         public override async Task<User> GetById(int id)

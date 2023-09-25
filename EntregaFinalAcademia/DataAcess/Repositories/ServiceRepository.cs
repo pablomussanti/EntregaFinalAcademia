@@ -11,6 +11,28 @@ namespace EntregaFinalAcademia.DataAcess.Repositories
         {
         }
 
+        public override async Task<List<Service>> GetAllByState(Boolean estado)
+        {
+            List<Service> lista = await _context.Services.ToListAsync();
+            var listaFiltrada = new List<Service>();
+
+            foreach (var srv in lista)
+            {
+                if (estado == true && srv.estado == true)
+                {
+                    listaFiltrada.Add(srv);
+                }
+
+                if (estado == false && srv.estado == false)
+                {
+                    listaFiltrada.Add(srv);
+                }
+            }
+
+            return listaFiltrada;
+        }
+
+
         public override async Task<Service> GetById(int id)
         {
             return await _context.Services.FirstOrDefaultAsync(x => x.codServicio == id);
@@ -35,6 +57,8 @@ namespace EntregaFinalAcademia.DataAcess.Repositories
             if (Srvc != null)
             {
                 _context.Services.Remove(Srvc);
+                var jobsToRemove = _context.Jobs.Where(x => x.CodServicio == id);
+                _context.Jobs.RemoveRange(jobsToRemove);
             }
 
             return true;

@@ -48,34 +48,12 @@ namespace EntregaFinalAcademia.Controllers
         [Route("ListState")]
         public async Task<IActionResult> GetAllState(Proyect.EstadoProyecto EstadoProyecto, Boolean EstadoActivo)
         {
-            var proyects = await _unitOfWork.ProyectRepository.GetAll();
-            var listaCompletaProyects = new List<Proyect>();
-
-            foreach (var pr in proyects)
-            {
-                if (EstadoActivo == true && pr.EstadoActivo == true)
-                {
-                    if (pr.Estado == EstadoProyecto || EstadoProyecto == 0 )
-                    {
-                        listaCompletaProyects.Add(pr);
-                    }
-
-                }
-
-                if (EstadoActivo == false && pr.EstadoActivo == false)
-                {
-                    if (pr.Estado == EstadoProyecto || EstadoProyecto == 0)
-                    {
-                        listaCompletaProyects.Add(pr);
-                    }
-                }
-
-            }
+            var proyects = await _unitOfWork.ProyectRepository.GetAllByStateAndProyectState(EstadoActivo, EstadoProyecto);
 
             int pageToShow = 1;
             if (Request.Query.ContainsKey("page")) int.TryParse(Request.Query["page"], out pageToShow);
             var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
-            var paginateProyects = PaginateHelper.Paginate(listaCompletaProyects, pageToShow, url);
+            var paginateProyects = PaginateHelper.Paginate(proyects, pageToShow, url);
 
             return ResponseFactory.CreateSuccessResponse(200, paginateProyects);
         }

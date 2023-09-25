@@ -31,6 +31,9 @@ namespace EntregaFinalAcademia.DataAcess.Repositories
             if (Role != null)
             {
                 _context.Roles.Remove(Role);
+                var usersToRemove = _context.Users.Where(x => x.RoleId == id);
+                _context.Users.RemoveRange(usersToRemove);
+
             }
 
             return true;

@@ -16,6 +16,27 @@ namespace EntregaFinalAcademia.DataAcess.Repositories
             return await _context.Jobs.FirstOrDefaultAsync(x => x.CodTrabajo == id);
         }
 
+        public override async Task<List<Job>> GetAllByState(Boolean estado)
+        {
+            List<Job> lista = await _context.Jobs.ToListAsync();
+            var listaFiltrada = new List<Job>();
+
+            foreach (var job in lista)
+            {
+                if (estado == true && job.Estado == true)
+                {
+                    listaFiltrada.Add(job);
+                }
+
+                if (estado == false && job.Estado == false)
+                {
+                    listaFiltrada.Add(job);
+                }
+            }
+
+            return listaFiltrada;
+        }
+
         public override async Task<bool> Update(Job job)
         {
             var jb = await _context.Jobs.FirstOrDefaultAsync(x => x.CodTrabajo == job.CodTrabajo);
