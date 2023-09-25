@@ -50,26 +50,12 @@ namespace EntregaFinalAcademia.Controllers
         [Route("ListState")]
         public async Task<IActionResult> GetAllState(Boolean EstadoActivo)
         {
-            var services = await _unitOfWork.ServiceRepository.GetAll();
-            var listaCompletaServices = new List<Service>();
-
-            foreach (var srv in services)
-            {
-                if (EstadoActivo == true && srv.estado == true)
-                {
-                    listaCompletaServices.Add(srv);
-                }
-
-                if (EstadoActivo == false && srv.estado == false)
-                {
-                    listaCompletaServices.Add(srv);
-                }
-            }
+            var services = await _unitOfWork.ServiceRepository.GetAllByState(EstadoActivo);
 
             int pageToShow = 1;
             if (Request.Query.ContainsKey("page")) int.TryParse(Request.Query["page"], out pageToShow);
             var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
-            var paginateServices = PaginateHelper.Paginate(listaCompletaServices, pageToShow, url);
+            var paginateServices = PaginateHelper.Paginate(services, pageToShow, url);
 
             return ResponseFactory.CreateSuccessResponse(200, paginateServices);
 

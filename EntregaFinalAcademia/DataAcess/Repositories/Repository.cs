@@ -17,6 +17,11 @@ namespace EntregaFinalAcademia.DataAcess.Repositories
             return await _context.Set<T>().ToListAsync();
         }
 
+        public virtual async Task<List<T>> GetAllByState(bool state)
+        {
+            throw new NotImplementedException();
+        }
+
         public virtual Task<T> GetById(int id)
         {
             throw new NotImplementedException();
@@ -42,5 +47,7 @@ namespace EntregaFinalAcademia.DataAcess.Repositories
         {
             throw new NotImplementedException();
         }
+
+
     }
 }

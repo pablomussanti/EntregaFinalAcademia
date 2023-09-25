@@ -1,6 +1,8 @@
 ﻿using EntregaFinalAcademia.DataAcess.Repositories.Interfaces;
 using EntregaFinalAcademia.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Numerics;
+using static EntregaFinalAcademia.Entities.Proyect;
 
 namespace EntregaFinalAcademia.DataAcess.Repositories
 {
@@ -9,6 +11,35 @@ namespace EntregaFinalAcademia.DataAcess.Repositories
 
         public ProyectRepository(ApplicationDbContext context) : base(context)
         {
+        }
+
+        public  async Task<List<Proyect>> GetAllByStateAndProyectState(Boolean estadoactivo, EstadoProyecto estadoproyecto)
+        {
+            List<Proyect> lista = await _context.Proyects.ToListAsync();
+            var listaFiltrada = new List<Proyect>();
+
+            foreach (var pr in lista)
+            {
+                if (estadoactivo == true && pr.EstadoActivo == true)
+                {
+                    if (pr.Estado == estadoproyecto || estadoproyecto == 0)
+                    {
+                        listaFiltrada.Add(pr);
+                    }
+
+                }
+
+                if (estadoactivo == false && pr.EstadoActivo == false)
+                {
+                    if (pr.Estado == estadoproyecto || estadoproyecto == 0)
+                    {
+                        listaFiltrada.Add(pr);
+                    }
+                }
+
+            }
+
+            return listaFiltrada;
         }
 
         public override async Task<Proyect> GetById(int id)
@@ -36,6 +67,9 @@ namespace EntregaFinalAcademia.DataAcess.Repositories
             if (pryt != null)
             {
                 _context.Proyects.Remove(pryt);
+                var jobsToRemove = _context.Jobs.Where(x => x.CodProyecto == id); 
+                _context.Jobs.RemoveRange(jobsToRemove);
+
             }
 
             return true;

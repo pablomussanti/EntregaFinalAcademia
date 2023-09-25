@@ -51,26 +51,12 @@ namespace EntregaFinalAcademia.Controllers
         public async Task<IActionResult> GetAllState(Boolean EstadoActivo)
         {
 
-                var Jobs = await _unitOfWork.JobRepository.GetAll();
-                var listaCompletaJobs = new List<Job>();
-
-                foreach (var job in Jobs)
-                {
-                    if (EstadoActivo == true && job.Estado == true)
-                    {
-                        listaCompletaJobs.Add(job);
-                    }
-
-                    if (EstadoActivo == false && job.Estado == false)
-                    {
-                        listaCompletaJobs.Add(job);
-                    }
-                }
+            var Jobs = await _unitOfWork.JobRepository.GetAllByState(EstadoActivo);
 
             int pageToShow = 1;
             if (Request.Query.ContainsKey("page")) int.TryParse(Request.Query["page"], out pageToShow);
             var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
-            var paginateJobs = PaginateHelper.Paginate(listaCompletaJobs, pageToShow, url);
+            var paginateJobs = PaginateHelper.Paginate(Jobs, pageToShow, url);
 
             return ResponseFactory.CreateSuccessResponse(200, paginateJobs);
            
