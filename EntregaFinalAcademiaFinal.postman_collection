@@ -1,0 +1,2183 @@
+{
+	"info": {
+		"_postman_id": "f2364343-92e4-4daf-84ff-543075355455",
+		"name": "EntregaFinalAcademia",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23776712"
+	},
+	"item": [
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "User Admin",
+					"item": [
+						{
+							"name": "GetAll",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/User",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"User"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ListState",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/User/ListState?EstadoActivo=true",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"User",
+										"ListState"
+									],
+									"query": [
+										{
+											"key": "EstadoActivo",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetById",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/User/GetById?id=1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"User",
+										"GetById"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"dni\": 0,\r\n  \"nombre\": \"Fede\",\r\n  \"clave\": \"fede\",\r\n  \"email\": \"fede@hotmail.com\",\r\n  \"estado\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7282/api/User/Register",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"User",
+										"Register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"dni\": 1234,\r\n  \"nombre\": \"fede\",\r\n  \"clave\": \"fede\",\r\n  \"email\": \"fede@hotmail.com\",\r\n  \"estado\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7282/api/User/2",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"User",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "HardDelete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/User/Hard/2",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"User",
+										"Hard",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "SoftDelete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/User/Soft/2",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"User",
+										"Soft",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "ABM de Usuarios consultados por un Admin + Listado por ID y Listado Por Estado Logico de Baja."
+				},
+				{
+					"name": "Proyect Admin",
+					"item": [
+						{
+							"name": "GetAll",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/Proyect",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Proyect"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ListState",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/Proyect/ListState?EstadoProyecto=1&EstadoActivo=true",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Proyect",
+										"ListState"
+									],
+									"query": [
+										{
+											"key": "EstadoProyecto",
+											"value": "1"
+										},
+										{
+											"key": "EstadoActivo",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetById",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/Proyect/GetById?id=2",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Proyect",
+										"GetById"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nombre\": \"Proyecto X\",\r\n  \"direccion\": \"San Juan 23245\",\r\n  \"estado\": 1,\r\n  \"estadoActivo\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7282/api/Proyect/Create",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Proyect",
+										"Create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nombre\": \"Proyecto Y\",\r\n  \"direccion\": \"Congreso 783\",\r\n  \"estado\": 2,\r\n  \"estadoActivo\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7282/api/Proyect/4",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Proyect",
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "HardDelete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/Proyect/Hard/6",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Proyect",
+										"Hard",
+										"6"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "SoftDelete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/Proyect/Soft/5",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Proyect",
+										"Soft",
+										"5"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "ABM de Proyectos consultados por un Admin + Listado por ID y Listado Por Estado Logico de Baja y Estado del Proyecto."
+				},
+				{
+					"name": "Job Admin",
+					"item": [
+						{
+							"name": "GetAll",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/Job",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Job"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ListState",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/Job/ListState?EstadoActivo=true",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Job",
+										"ListState"
+									],
+									"query": [
+										{
+											"key": "EstadoActivo",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetById",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/Job/GetById?id=1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Job",
+										"GetById"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fecha\": \"2023-09-20T16:48:16.661Z\",\r\n  \"codProyecto\": 3,\r\n  \"codServicio\": 1,\r\n  \"cantHoras\": 23,\r\n  \"valorHora\": 100,\r\n  \"costo\": 23231,\r\n  \"estado\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7282/api/Job/Create",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Job",
+										"Create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fecha\": \"2023-09-20T16:49:25.514Z\",\r\n  \"codProyecto\": 5,\r\n  \"codServicio\": 1,\r\n  \"cantHoras\": 4,\r\n  \"valorHora\": 4,\r\n  \"costo\": 4,\r\n  \"estado\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7282/api/Job/2",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Job",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "HardDelete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/Job/Hard/4",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Job",
+										"Hard",
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "SoftDelete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/Job/Soft/4",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Job",
+										"Soft",
+										"4"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "ABM de Trabajos consultados por un Admin + Listado por ID y Listado Por Estado Logico de Baja."
+				},
+				{
+					"name": "Service Admin",
+					"item": [
+						{
+							"name": "GetAll",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7282/api/Service",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Service"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ListState",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/Service/ListState?EstadoActivo=true",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Service",
+										"ListState"
+									],
+									"query": [
+										{
+											"key": "EstadoActivo",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetById",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7282/api/Service/GetById?id=1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Service",
+										"GetById"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"descr\": \"Servicio X\",\r\n  \"estado\": true,\r\n  \"valorHora\": 200\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7282/api/Service/Create",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Service",
+										"Create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"descr\": \"Edicion4\",\r\n  \"estado\": true,\r\n  \"valorHora\": 0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7282/api/Service/3",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Service",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "HardDelete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/Service/Hard/3",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Service",
+										"Hard",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "SoftDelete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7282/api/Service/Soft/3",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Service",
+										"Soft",
+										"3"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "ABM de Servicios consultados por un Admin + Listado por ID y Listado Por Estado Logico de Baja."
+				}
+			],
+			"description": "Rol administrador en la aplicacion"
+		},
+		{
+			"name": "Consultor",
+			"item": [
+				{
+					"name": "User Consultor",
+					"item": [
+						{
+							"name": "GetAll",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenConsultor}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/User",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"User"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ListState",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenConsultor}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/User/ListState?EstadoActivo=true",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"User",
+										"ListState"
+									],
+									"query": [
+										{
+											"key": "EstadoActivo",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetById",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenConsultor}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/User/GetById?id=1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"User",
+										"GetById"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"dni\": 0,\r\n  \"nombre\": \"string\",\r\n  \"clave\": \"string\",\r\n  \"email\": \"string2\",\r\n  \"estado\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7282/api/User/Register",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"User",
+										"Register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenConsultor}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"dni\": 0,\r\n  \"nombre\": \"1234\",\r\n  \"clave\": \"string\",\r\n  \"email\": \"string\",\r\n  \"estado\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7282/api/User/1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"User",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "HardDelete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenConsultor}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/User/Hard/1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"User",
+										"Hard",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "SoftDelete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenConsultor}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/User/Soft/1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"User",
+										"Soft",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "ABM de Usuarios consultados por un Consultor + Listado por ID y Listado Por Estado Logico de Baja."
+				},
+				{
+					"name": "Proyect Consultor",
+					"item": [
+						{
+							"name": "GetAll",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenConsultor}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/Proyect",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Proyect"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ListState",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenConsultor}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/Proyect/ListState?EstadoProyecto=1&EstadoActivo=true",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Proyect",
+										"ListState"
+									],
+									"query": [
+										{
+											"key": "EstadoProyecto",
+											"value": "1"
+										},
+										{
+											"key": "EstadoActivo",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetById",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenConsultor}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/Proyect/GetById?id=1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Proyect",
+										"GetById"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenConsultor}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nombre\": \"string\",\r\n  \"direccion\": \"string\",\r\n  \"estado\": 1,\r\n  \"estadoActivo\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7282/api/Proyect/Create",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Proyect",
+										"Create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenConsultor}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nombre\": \"t3\",\r\n  \"direccion\": \"string\",\r\n  \"estado\": 1,\r\n  \"estadoActivo\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7282/api/Proyect/1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Proyect",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "HardDelete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenConsultor}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/Proyect/Hard/1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Proyect",
+										"Hard",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "SoftDelete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenConsultor}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/Proyect/Soft/1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Proyect",
+										"Soft",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "ABM de Proyectos consultados por un Consultor + Listado por ID y Listado Por Estado Logico de Baja y Estado del Proyecto."
+				},
+				{
+					"name": "Job Consultor",
+					"item": [
+						{
+							"name": "GetAll",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenConsultor}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/Job",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Job"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ListState",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenConsultor}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/Job/ListState?EstadoActivo=true",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Job",
+										"ListState"
+									],
+									"query": [
+										{
+											"key": "EstadoActivo",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetById",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenConsultor}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/Job/GetById?id=1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Job",
+										"GetById"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenConsultor}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fecha\": \"2023-09-20T16:48:16.661Z\",\r\n  \"codProyecto\": 1,\r\n  \"codServicio\": 1,\r\n  \"cantHoras\": 1,\r\n  \"valorHora\": 1,\r\n  \"costo\": 1,\r\n  \"estado\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7282/api/Job/Create",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Job",
+										"Create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenConsultor}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"fecha\": \"2023-09-20T16:49:25.514Z\",\r\n  \"codProyecto\": 1,\r\n  \"codServicio\": 1,\r\n  \"cantHoras\": 4,\r\n  \"valorHora\": 4,\r\n  \"costo\": 4,\r\n  \"estado\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7282/api/Job/1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Job",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "HardDelete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenConsultor}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/Job/Hard/1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Job",
+										"Hard",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "SoftDelete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenConsultor}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/Job/Soft/1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Job",
+										"Soft",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "ABM de Trabajos consultados por un Consultor + Listado por ID y Listado Por Estado Logico de Baja."
+				},
+				{
+					"name": "Service Consultor",
+					"item": [
+						{
+							"name": "GetAll",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenConsultor}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7282/api/Service",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Service"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ListState",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenConsultor}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/Service/ListState?EstadoActivo=true",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Service",
+										"ListState"
+									],
+									"query": [
+										{
+											"key": "EstadoActivo",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetById",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenConsultor}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7282/api/Service/GetById?id=1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Service",
+										"GetById"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenConsultor}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"descr\": \"string\",\r\n  \"estado\": true,\r\n  \"valorHora\": 0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7282/api/Service/Create",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Service",
+										"Create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenConsultor}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"descr\": \"Edicion4\",\r\n  \"estado\": true,\r\n  \"valorHora\": 0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7282/api/Service/1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Service",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "HardDelete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenConsultor}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7282/api/Service/Hard/1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Service",
+										"Hard",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "SoftDelete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TokenConsultor}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7282/api/Service/Soft/1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7282",
+									"path": [
+										"api",
+										"Service",
+										"Soft",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "ABM de Servicios consultados por un Consultor + Listado por ID y Listado Por Estado Logico de Baja."
+				}
+			],
+			"description": "Rol consultor en la aplicacion"
+		},
+		{
+			"name": "Login Global",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"admin@hotmail.com\",\r\n  \"password\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7282/api/Login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7282",
+							"path": [
+								"api",
+								"Login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Ingreso a la aplicacion con la implementacion del Token JWT"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "TokenAdmin",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ3ZWJBcGlTdWJqZWN0IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiMTExMTExMTEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiIxIiwiZXhwIjoxNjk1NjAyMjU1fQ.uhr3GkFbivfxRHBuyEdpQIocRKTeSj2fijDyGT32N-8"
+		},
+		{
+			"key": "TokenConsultor",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ3ZWJBcGlTdWJqZWN0IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiMCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IjIiLCJleHAiOjE2OTU2MDIyMzF9.m6WAagNa8SGAeeoVgfxxVOULPvkeqeivpGS41FBTUCQ"
+		}
+	]
+}
